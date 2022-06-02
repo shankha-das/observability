@@ -189,6 +189,8 @@ export interface IConfigPanelOptionSection {
   mapTo: 'mode';
   props?: any;
   isSingleSelection?: boolean;
+  eleType?: string;
+  defaultState?: boolean | string;
 }
 
 export interface IVisualizationTypeDefination {

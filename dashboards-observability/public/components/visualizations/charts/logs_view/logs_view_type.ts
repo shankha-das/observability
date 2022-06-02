@@ -8,6 +8,9 @@ import { getPlotlyCategory, getPlotlySharedConfigs } from '../shared/shared_conf
 import { LensIconChartDatatable } from '../../assets/chart_datatable';
 import { VizDataPanel } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/default_vis_editor';
 import { PLOTLY_COLOR } from '../../../../../common/constants/shared';
+import { ConfigLogsView } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_logs_view';
+import { ButtonGroupItem } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_button_group';
+import { ConfigSwitch } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_switch';
 
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
@@ -34,13 +37,55 @@ export const createLogsViewTypeDefinition = (params: any = {}) => ({
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [
-          // {
-          //   id: 'text_editor',
-          //   name: 'Text',
-          //   editor: ConfigText,
-          //   mapTo: 'text',
-          //   schemas: [],
-          // },
+          {
+            id: 'chart_styles',
+            name: 'Chart styles',
+            editor: ConfigLogsView,
+            mapTo: 'chartStyles',
+            schemas: [
+              {
+                name: 'Time',
+                component: ConfigSwitch,
+                mapTo: 'time',
+                defaultState: true,
+                eleType: 'switch',
+              },
+              {
+                name: 'Wrap lines',
+                component: ConfigSwitch,
+                mapTo: 'wrapLines',
+                defaultState: false,
+                eleType: 'switch',
+              },
+              {
+                name: 'Prettify JSON',
+                component: ConfigSwitch,
+                mapTo: 'prettifyJSON',
+                defaultState: false,
+                eleType: 'switch',
+              },
+              {
+                name: 'Enable log details',
+                component: ConfigSwitch,
+                mapTo: 'enableLogDetails',
+                defaultState: true,
+                eleType: 'switch',
+              },
+              {
+                name: 'Order',
+                mapTo: 'order',
+                component: ButtonGroupItem,
+                props: {
+                  options: [
+                    { name: 'Newest first ', id: "newestFirst" },
+                    { name: 'Oldest first ', id: "oldestFirst" },
+                  ],
+                  defaultSelections: [{ name: 'Newest first ', id: "newestFirst" }],
+                },
+                eleType: 'buttons',
+              },
+            ],
+          },
         ],
       },
     ],
