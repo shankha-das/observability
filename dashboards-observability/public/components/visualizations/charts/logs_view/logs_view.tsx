@@ -3,40 +3,47 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo, useCallback } from 'react';
-import { EuiInMemoryTable, EuiDataGrid, EuiAccordion, EuiText, EuiPanel, EuiSpacer } from '@elastic/eui';
+import React, { useState, useMemo, useCallback, useContext } from 'react';
+import {
+  EuiInMemoryTable,
+  EuiDataGrid,
+  EuiAccordion,
+  EuiText,
+  EuiPanel,
+  EuiSpacer,
+} from '@elastic/eui';
+import { TabContext } from '../../../event_analytics/hooks';
 
 export const LogsView = ({ visualizations }: any) => {
-  const {
-    data: vizData,
-    jsonData,
-    metadata: { fields = [] },
-  } = visualizations.data.rawVizData;
+ 
+  const { explorerData } = useContext<any>(TabContext);
+  const rawData = explorerData.jsonData;
+  const logs =
+    rawData &&
+    rawData.map((log, index) => (
+      <>
+        <EuiAccordion
+          key={index}
+          id={'multipleAccordionsId__1'}
+          buttonContent="An accordion with padding applied through props"
+          paddingSize="l"
+        >
+          <EuiPanel color="subdued">
+            {Object.entries(log).map((logObj: any) => (
+              <>
+                <EuiText size="s">
+                  <p>{logObj[0]}</p>
+                </EuiText>
+                <EuiText size="s">
+                  <p>{logObj[1]}</p>
+                </EuiText>
+              </>
+            ))}
+          </EuiPanel>
+        </EuiAccordion>
+        <EuiSpacer />
+      </>
+    ));
 
-  const raw_data = [...jsonData];
-
-  console.log("raw_data:: ", raw_data);
-  const logs = raw_data && raw_data.map((log, index) => (
-    <>
-      <EuiAccordion
-        key={index}
-        id={'multipleAccordionsId__1'}
-        buttonContent="An accordion with padding applied through props"
-        paddingSize="l"
-      >
-        <EuiPanel color="subdued">
-          <EuiText size="s">
-            <p>{JSON.stringify(log)}</p>
-          </EuiText>
-        </EuiPanel>
-      </EuiAccordion>
-      <EuiSpacer />
-    </>
-  ));
-
-  return (
-    <div>
-      {logs}
-    </div>
-  );
+  return <div>{logs}</div>;
 };

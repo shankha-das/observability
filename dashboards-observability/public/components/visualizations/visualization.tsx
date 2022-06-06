@@ -8,7 +8,7 @@ import { isArray } from 'lodash';
 import { VisualizationChart } from './visualization_chart';
 import { EmptyPlaceholder } from '../event_analytics/explorer/visualizations/shared_components/empty_placeholder';
 
-interface IVisualizationProps {}
+interface IVisualizationProps { }
 
 export const Visualization = ({ visualizations }: IVisualizationProps) => {
   const { data, vis } = visualizations;
@@ -23,7 +23,7 @@ export const Visualization = ({ visualizations }: IVisualizationProps) => {
 
   return (
     <>
-      {isVizDataValid && isVizFieldValid ? (
+      {vis?.type === 'logs_view' || isVizDataValid && isVizFieldValid ? (
         <VisualizationChart visualizations={visualizations} />
       ) : (
         <EmptyPlaceholder icon={visualizations?.vis?.iconType} />

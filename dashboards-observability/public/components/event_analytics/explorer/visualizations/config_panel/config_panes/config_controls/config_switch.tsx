@@ -22,7 +22,7 @@ export const ConfigSwitch: React.FC<EUISwitch> = ({
                 showLabel={false}
                 label={label}
                 checked={checked}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e.target.checked)}
                 compressed
             />
         </EuiFormRow>

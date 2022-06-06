@@ -39,8 +39,8 @@ export const ConfigLogsView = ({ visualizations, schemas, vizState, handleConfig
       } else if (schema.eleType === 'switch') {
         params = {
           label: schema.name,
-          checked: vizState[schema.mapTo] || schema?.defaultState,
-          onChange: handleConfigurationChange(schema.mapTo),
+          checked: vizState[schema.mapTo] !== undefined ? vizState[schema.mapTo] : schema?.defaultState,
+          handleChange: handleConfigurationChange(schema.mapTo),
           vizState,
           ...schema.props,
         };
