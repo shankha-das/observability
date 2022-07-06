@@ -25,3 +25,25 @@ tr:hover {
 .lvEuiAccordian_Panel {
     border: 1px solid #D3DAE6 !important;
 }
+
+.euiIEFlexWrapFix {
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.rawlogData {
+    line-height: 1.5;
+    color: #343741;
+    word-break: break-all;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.euiAccordion__button {
+    font-size: inherit;
+}
+
+.tableContainer {
+    white-space: normal;
+}

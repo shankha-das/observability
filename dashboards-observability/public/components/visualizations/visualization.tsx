@@ -7,7 +7,7 @@ import React from 'react';
 import { isArray } from 'lodash';
 import { VisualizationChart } from './visualization_chart';
 import { EmptyPlaceholder } from '../event_analytics/explorer/visualizations/shared_components/empty_placeholder';
-import { visChartTypes } from 'common/constants/shared';
+import { visChartTypes } from '../../../common/constants/shared';
 
 interface IVisualizationProps { }
 

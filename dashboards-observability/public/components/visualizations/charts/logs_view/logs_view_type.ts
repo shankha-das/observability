@@ -11,6 +11,7 @@ import { PLOTLY_COLOR } from '../../../../../common/constants/shared';
 import { ConfigLogsView } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_logs_view';
 import { ButtonGroupItem } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_button_group';
 import { ConfigSwitch } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_switch';
+import { InputFieldItem } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
@@ -77,12 +78,18 @@ export const createLogsViewTypeDefinition = (params: any = {}) => ({
                 component: ButtonGroupItem,
                 props: {
                   options: [
-                    { name: 'Newest first ', id: "newestFirst" },
-                    { name: 'Oldest first ', id: "oldestFirst" },
+                    { name: 'Newest first ', id: 'newestFirst' },
+                    { name: 'Oldest first ', id: 'oldestFirst' },
                   ],
-                  defaultSelections: [{ name: 'Newest first ', id: "newestFirst" }],
+                  defaultSelections: [{ name: 'Newest first ', id: 'newestFirst' }],
                 },
                 eleType: 'buttons',
+              },
+              {
+                name: 'Label Size',
+                component: InputFieldItem,
+                mapTo: 'labelSize',
+                eleType: 'input',
               },
             ],
           },
