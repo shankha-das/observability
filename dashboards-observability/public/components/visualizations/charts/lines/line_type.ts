@@ -14,6 +14,7 @@ import {
   ConfigThresholds,
   ConfigLineChartStyles,
   ConfigLegend,
+  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { ConfigAvailability } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
@@ -73,6 +74,40 @@ export const createLineTypeDefinition = (params: any = {}) => ({
                     { name: 'Bottom', id: 'h' },
                   ],
                   defaultSelections: [{ name: 'Right', id: LegendPosition }],
+                },
+              },
+            ],
+          },
+          {
+            id: 'tooltip_options',
+            name: 'Tooltip options',
+            editor: ConfigTooltip,
+            mapTo: 'tooltipOptions',
+            schemas: [
+              {
+                name: 'Tooltip mode',
+                component: null,
+                mapTo: 'tooltipMode',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Single', id: 'single' },
+                    { name: 'Hidden', id: 'hidden' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
+              },
+              {
+                name: 'Tooltip text',
+                component: null,
+                mapTo: 'tooltipText',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Dimension', id: 'x' },
+                    { name: 'Metrics', id: 'y' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
                 },
               },
             ],
