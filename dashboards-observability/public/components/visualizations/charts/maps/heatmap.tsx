@@ -48,6 +48,8 @@ export const HeatMap = ({ visualizations, layout, config }: any) => {
   const uniqueXaxis = uniq(data[xaxisField.label]);
   const uniqueYaxisLength = uniqueYaxis.length;
   const uniqueXaxisLength = uniqueXaxis.length;
+  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
 
   const colorField = dataConfig?.chartStyles
     ? dataConfig?.chartStyles.colorMode && dataConfig?.chartStyles.colorMode[0].name === OPACITY
@@ -110,6 +112,7 @@ export const HeatMap = ({ visualizations, layout, config }: any) => {
       z: calculatedHeapMapZaxis,
       x: uniqueXaxis,
       y: uniqueYaxis,
+      hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
       colorscale: colorField.name === SINGLE_COLOR_PALETTE ? traceColor : colorField.name,
       type: 'heatmap',
     },

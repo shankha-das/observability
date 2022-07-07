@@ -9,11 +9,11 @@ import { LensIconChartPie } from '../../assets/chart_pie';
 import { VizDataPanel } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/default_vis_editor';
 import { ConfigEditor } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/json_editor';
 import {
-  ConfigValueOptions,
   HeatmapColorPalettePicker,
   ConfigChartOptions,
   PanelItem,
   SingleColorPicker,
+  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import {
   COLOR_PALETTES,
@@ -44,6 +44,41 @@ export const createMapsVisDefinition = () => ({
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [
+          {
+            id: 'tooltip_options',
+            name: 'Tooltip options',
+            editor: ConfigTooltip,
+            mapTo: 'tooltipOptions',
+            schemas: [
+              {
+                name: 'Tooltip mode',
+                component: null,
+                mapTo: 'tooltipMode',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Single', id: 'single' },
+                    { name: 'Hidden', id: 'hidden' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
+              },
+              {
+                name: 'Tooltip text',
+                component: null,
+                mapTo: 'tooltipText',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Dim 1', id: 'x' },
+                    { name: 'Dim 2', id: 'y' },
+                    { name: 'Metrics', id: 'z' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
+              },
+            ],
+          },
           {
             id: 'chart_styles',
             name: 'Chart Styles',

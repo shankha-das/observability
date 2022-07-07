@@ -8,7 +8,7 @@ import { getPlotlySharedConfigs, getPlotlyCategory } from '../shared/shared_conf
 import { LensIconChartBar } from '../../assets/chart_bar';
 import { VizDataPanel } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/default_vis_editor';
 import { ConfigEditor } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/json_editor';
-import { ConfigValueOptions } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
+import { ConfigTooltip, ConfigValueOptions } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { ConfigAvailability } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
 import { ButtonGroupItem } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_button_group';
 import { ConfigBarChartStyles } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_bar_chart_styles';
@@ -69,6 +69,40 @@ export const createBarTypeDefinition = (params: any) => ({
                 isSingleSelection: false,
                 component: null,
                 mapTo: 'yaxis',
+              },
+            ],
+          },
+          {
+            id: 'tooltip_options',
+            name: 'Tooltip options',
+            editor: ConfigTooltip,
+            mapTo: 'tooltipOptions',
+            schemas: [
+              {
+                name: 'Tooltip mode',
+                component: null,
+                mapTo: 'tooltipMode',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Single', id: 'single' },
+                    { name: 'Hidden', id: 'hidden' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
+              },
+              {
+                name: 'Tooltip text',
+                component: null,
+                mapTo: 'tooltipText',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Dimension', id: 'x' },
+                    { name: 'Metrics', id: 'y' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
               },
             ],
           },

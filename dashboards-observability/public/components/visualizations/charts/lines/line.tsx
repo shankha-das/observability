@@ -27,7 +27,8 @@ export const Line = ({ visualizations, layout, config }: any) => {
   const dataConfigTab = visualizations.data?.rawVizData?.line?.dataConfig && visualizations.data.rawVizData.line.dataConfig;
   const xaxis = dataConfigTab?.dimensions ? dataConfigTab?.dimensions : [];
   const yaxis = dataConfigTab?.metrics ? dataConfigTab?.metrics : [];
-
+  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
   const lastIndex = fields.length - 1;
 
   const mode = dataConfig?.chartStyles?.style || DefaultMode;
@@ -86,6 +87,7 @@ export const Line = ({ visualizations, layout, config }: any) => {
           width: lineWidth,
           color: PLOTLY_COLOR[index],
         },
+        hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
         marker: {
           size: markerSize,
           ...isBarMode && barMarker,

@@ -33,6 +33,8 @@ export const Bar = ({ visualizations, layout, config }: any) => {
   const { defaultAxes } = visualizations.data;
   const tickAngle = dataConfig?.chartStyles?.rotateBarLabels || vis.labelAngle
   const lineWidth = dataConfig?.chartStyles?.lineWidth || vis.lineWidth;
+  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
   const fillOpacity = dataConfig?.chartStyles?.fillOpacity !== undefined ? dataConfig?.chartStyles?.fillOpacity / FILLOPACITY_DIV_FACTOR : vis.fillOpacity / FILLOPACITY_DIV_FACTOR;
   const barWidth = 1 - (dataConfig?.chartStyles?.barWidth || vis.barWidth);
   const groupWidth = 1 - (dataConfig?.chartStyles?.groupWidth || vis.groupWidth);
@@ -69,6 +71,7 @@ export const Bar = ({ visualizations, layout, config }: any) => {
         }
       },
       name: field.name,
+      hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
       orientation: barOrientation,
     };
   });
