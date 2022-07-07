@@ -4,7 +4,7 @@
  */
 import './logs_view.scss';
 import React, { useContext } from 'react';
-import { EuiAccordion, EuiPanel, EuiSpacer } from '@elastic/eui';
+import { EuiAccordion, EuiPanel, EuiSpacer, htmlIdGenerator } from '@elastic/eui';
 import { TabContext } from '../../../event_analytics/hooks';
 
 export const LogsView = ({ visualizations }: any) => {
@@ -29,51 +29,51 @@ export const LogsView = ({ visualizations }: any) => {
       : '14px';
   const rawData = explorerData.jsonData;
   const sortedRawData = [...rawData];
-  sortedRawData.sort(function (a: any, b: any) {
-    if (a.timestamp === undefined || b.timestamp === undefined) return 1;
-    const aTime = new Date(a.timestamp);
-    const bTime = new Date(b.timestamp);
-    return isOldestFirst ? aTime - bTime : bTime - aTime;
+  sortedRawData.sort(function (firstData: any, secondData: any) {
+    if (firstData.timestamp === undefined || secondData.timestamp === undefined) return 1;
+    const firstTime = new Date(firstData.timestamp);
+    const secondTime = new Date(secondData.timestamp);
+    return isOldestFirst ? firstTime - secondTime : secondTime - firstTime;
   });
   const logs =
     sortedRawData &&
     sortedRawData.map((log, index) => {
       let btnContent: JSX.Element;
       if (isWrapLinesEnabled) {
-        const col1 = Object.keys(log).reduce((val, key) => {
+        const column1 = Object.keys(log).reduce((val, key) => {
           if (key === 'timestamp') return log[key] + '  ';
           return val;
         }, '');
-        let col2 = '';
+        let column2 = '';
         for (const [key, val] of Object.entries(log)) {
-          if (key !== 'timestamp') col2 += key + '="' + val + '"  ';
+          if (key !== 'timestamp') column2 += key + '="' + val + '"  ';
         }
-        const jsxContent = col2
+        const jsxContent = column2
           .split('  ')
-          .map((ele) => <span style={{ paddingRight: '10px' }}>{ele}</span>);
+          .map((ele) => <span className="columnData">{ele}</span>);
         btnContent = (
           <table className="tableContainer">
             <tr>
-              {isTimeEnabled && col1 !== '' && (
-                <td style={{ width: '200px' }}>{col1.substring(0, col1.indexOf('.'))}</td>
+              {isTimeEnabled && column1 !== '' && (
+                <td className='timeColumn'>{column1.substring(0, column1.indexOf('.'))}</td>
               )}
-              <td style={{ wordBreak: 'break-all' }}>{jsxContent}</td>
+              <td className='wrapContent'>{jsxContent}</td>
             </tr>
           </table>
         );
       } else if (isPrettifyJSONEnabled) {
         const { timestamp, ...others } = log;
-        let col;
+        let columnContent;
         if (isTimeEnabled && timestamp !== undefined) {
-          col = JSON.stringify({ timestamp, ...others }, null, '\t');
+          columnContent = JSON.stringify({ timestamp, ...others }, null, '\t');
         } else {
-          col = JSON.stringify(others, null, '\t');
+          columnContent = JSON.stringify(others, null, '\t');
         }
         btnContent = (
           <table className="tableContainer">
             <tr>
               <td>
-                <pre>{col}</pre>
+                <pre>{columnContent}</pre>
               </td>
             </tr>
           </table>
@@ -92,11 +92,11 @@ export const LogsView = ({ visualizations }: any) => {
         }
         const jsxContent = stringContent
           .split('  ')
-          .map((ele) => <span style={{ paddingRight: '10px' }}>{ele}</span>);
+          .map((ele) => <span className="columnData">{ele}</span>);
         btnContent = (
           <table>
             <tr>
-              <td style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>{jsxContent}</td>
+              <td className='noWrapContent'>{jsxContent}</td>
             </tr>
           </table>
         );
@@ -106,7 +106,7 @@ export const LogsView = ({ visualizations }: any) => {
           <>
             <EuiAccordion
               key={index}
-              id={'multipleAccordionsId__1'}
+              id={htmlIdGenerator('multipleAccordionsId__1')()}
               buttonContent={btnContent}
               paddingSize="l"
             >

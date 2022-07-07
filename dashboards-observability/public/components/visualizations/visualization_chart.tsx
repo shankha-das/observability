@@ -5,7 +5,7 @@
 
 import React, { useMemo } from 'react';
 
-interface IVisualizationChart { }
+interface IVisualizationChart {}
 
 export const VisualizationChart = ({ visualizations }: IVisualizationChart) => {
   const { vis } = visualizations;

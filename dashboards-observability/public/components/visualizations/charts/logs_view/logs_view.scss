@@ -44,6 +44,23 @@ tr:hover {
     font-size: inherit;
 }
 
+.columnData {
+    padding-right: 10px;
+}
+
+.timeColumn {
+    width: 200px;
+}
+
+.wrapContent {
+    word-break: 'break-all';
+}
+
+.noWrapContent {
+    white-space: 'nowrap';
+    overflow: 'hidden';
+}
+
 .tableContainer {
     white-space: normal;
 }
