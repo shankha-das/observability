@@ -32,9 +32,19 @@ export const LogsView = ({ visualizations }: any) => {
   const rawData = explorerData.jsonData;
   const sortedRawData = [...rawData];
   sortedRawData.sort(function (firstData: any, secondData: any) {
-    if (firstData.timestamp === undefined || secondData.timestamp === undefined) return 1;
-    const firstTime = new Date(firstData.timestamp);
-    const secondTime = new Date(secondData.timestamp);
+    if (
+      firstData.timestamp === undefined ||
+      secondData.timestamp === undefined ||
+      firstData.new_timestamp === undefined ||
+      secondData.new_timestamp === undefined
+    )
+      return 1;
+    const firstTime = new Date(
+      firstData.timestamp !== undefined ? firstData.timestamp : firstData.new_timestamp
+    );
+    const secondTime = new Date(
+      secondData.timestamp !== undefined ? secondData.timestamp : secondData.new_timestamp
+    );
     return isOldestFirst ? firstTime - secondTime : secondTime - firstTime;
   });
   const logs =
@@ -43,12 +53,12 @@ export const LogsView = ({ visualizations }: any) => {
       let btnContent: JSX.Element;
       if (isWrapLinesEnabled) {
         const column1 = Object.keys(log).reduce((val, key) => {
-          if (key === 'timestamp') return log[key] + '  ';
+          if (key === 'timestamp' || key === 'new_timestamp') return log[key] + '  ';
           return val;
         }, '');
         let column2 = '';
         for (const [key, val] of Object.entries(log)) {
-          if (key !== 'timestamp') column2 += key + '="' + val + '"  ';
+          if (key !== 'timestamp' && key !== 'new_timestamp') column2 += key + '="' + val + '"  ';
         }
         const jsxContent = column2
           .split('  ')
@@ -68,10 +78,12 @@ export const LogsView = ({ visualizations }: any) => {
           </table>
         );
       } else if (isPrettifyJSONEnabled) {
-        const { timestamp, ...others } = log;
+        const { timestamp, new_timestamp, ...others } = log;
         let columnContent;
         if (isTimeEnabled && timestamp !== undefined) {
           columnContent = JSON.stringify({ timestamp, ...others }, null, '\t');
+        } else if (isTimeEnabled && new_timestamp !== undefined) {
+          columnContent = JSON.stringify({ new_timestamp, ...others }, null, '\t');
         } else {
           columnContent = JSON.stringify(others, null, '\t');
         }
@@ -88,7 +100,7 @@ export const LogsView = ({ visualizations }: any) => {
         let stringContent = '';
         if (isTimeEnabled) {
           stringContent += Object.keys(log).reduce((val, key) => {
-            if (key === 'timestamp')
+            if (key === 'timestamp' || key === 'new_timestamp')
               return log[key].indexOf('.') !== -1
                 ? log[key].substring(0, log[key].indexOf('.')) + '  '
                 : log[key] + '  ';
@@ -96,7 +108,7 @@ export const LogsView = ({ visualizations }: any) => {
           });
         }
         for (const [key, val] of Object.entries(log)) {
-          if (key === 'timestamp') continue;
+          if (key === 'timestamp' || key === 'new_timestamp') continue;
           stringContent += key + '="' + val + '"  ';
         }
         const jsxContent = stringContent

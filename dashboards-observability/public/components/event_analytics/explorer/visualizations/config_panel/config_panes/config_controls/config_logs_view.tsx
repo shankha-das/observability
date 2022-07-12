@@ -57,7 +57,11 @@ export const ConfigLogsView = ({
         } else if (schema.eleType === 'switch') {
           let isDisabled = false;
           if (schema.name === 'Time') {
-            const isTimeAvailable = rawData && rawData.find((data) => data.timestamp !== undefined);
+            const isTimeAvailable =
+              rawData &&
+              rawData.find(
+                (data) => data.timestamp !== undefined || data.new_timestamp !== undefined
+              );
             isDisabled = isTimeAvailable === undefined ? true : false;
           }
           params = {
