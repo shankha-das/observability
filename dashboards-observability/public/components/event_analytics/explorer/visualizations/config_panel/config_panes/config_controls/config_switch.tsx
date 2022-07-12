@@ -8,26 +8,24 @@ import { uniqueId } from 'lodash';
 import { EuiSpacer, EuiFormRow, EuiSwitch, EuiSwitchEvent } from '@elastic/eui';
 
 interface EUISwitch {
-    label: string;
-    disabled: boolean;
-    checked: boolean;
-    handleChange: (event: EuiSwitchEvent) => void;
+  label: string;
+  disabled: boolean;
+  checked: boolean;
+  handleChange: (event: EuiSwitchEvent) => void;
 }
-export const ConfigSwitch: React.FC<EUISwitch> = ({
-    label, disabled, checked, handleChange
-}) => (
-    <>
-        <EuiFormRow label={label}>
-            <EuiSwitch
-                id={uniqueId('switch-button')}
-                showLabel={false}
-                disabled={disabled}
-                label={label}
-                checked={checked}
-                onChange={(e) => handleChange(e.target.checked)}
-                compressed
-            />
-        </EuiFormRow>
-        <EuiSpacer size="s" />
-    </>
+export const ConfigSwitch: React.FC<EUISwitch> = ({ label, disabled, checked, handleChange }) => (
+  <>
+    <EuiFormRow label={label}>
+      <EuiSwitch
+        id={uniqueId('switch-button')}
+        showLabel={false}
+        disabled={disabled}
+        label={label}
+        checked={checked}
+        onChange={(e) => handleChange(e.target.checked)}
+        compressed
+      />
+    </EuiFormRow>
+    <EuiSpacer size="s" />
+  </>
 );

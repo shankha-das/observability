@@ -2,10 +2,10 @@
  * Copyright OpenSearch Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
-import './logs_view.scss';
-import React, { useContext } from 'react';
 import { EuiAccordion, EuiPanel, EuiSpacer, htmlIdGenerator } from '@elastic/eui';
+import React, { useContext } from 'react';
 import { TabContext } from '../../../event_analytics/hooks';
+import './logs_view.scss';
 
 export const LogsView = ({ visualizations }: any) => {
   const { explorerData } = useContext<any>(TabContext);
@@ -24,7 +24,7 @@ export const LogsView = ({ visualizations }: any) => {
     dataConfig?.chartStyles?.enableLogDetails !== undefined
       ? dataConfig?.chartStyles?.enableLogDetails
       : true;
-  const isOldestFirst = dataConfig?.chartStyles?.order === 'oldestFirst' ? true : false;
+  const isOldestFirst = dataConfig?.chartStyles?.order === 'oldestFirst';
   const labelSize =
     dataConfig?.chartStyles?.labelSize !== undefined
       ? dataConfig?.chartStyles?.labelSize + 'px'

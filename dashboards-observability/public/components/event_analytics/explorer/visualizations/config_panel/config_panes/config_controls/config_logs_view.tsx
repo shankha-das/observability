@@ -9,7 +9,14 @@ import { IConfigPanelOptionSection } from '../../../../../../../../common/types/
 import { ButtonGroupItem } from './config_button_group';
 import { TabContext } from '../../../../../../event_analytics/hooks';
 
-export const ConfigLogsView = ({ visualizations, schemas, vizState, handleConfigChange, sectionName, sectionId = 'chartStyles' }) => {
+export const ConfigLogsView = ({
+  visualizations,
+  schemas,
+  vizState,
+  handleConfigChange,
+  sectionName,
+  sectionId = 'chartStyles',
+}) => {
   const { explorerData } = useContext<any>(TabContext);
   const rawData = explorerData.jsonData;
 
@@ -25,55 +32,69 @@ export const ConfigLogsView = ({ visualizations, schemas, vizState, handleConfig
     [handleConfigChange, vizState]
   );
 
-
-  const dimensions = useMemo(() =>
-    schemas.map((schema: IConfigPanelOptionSection, index: string) => {
-      let params;
-      const DimensionComponent = schema.component || ButtonGroupItem;
-      if (schema.eleType === 'buttons') {
-        params = {
+  const dimensions = useMemo(
+    () =>
+      schemas.map((schema: IConfigPanelOptionSection, index: string) => {
+        let params = {
           title: schema.name,
-          legend: schema.name,
-          groupOptions: schema?.props?.options.map((btn: { name: string }) => ({ ...btn, label: btn.name })),
-          idSelected: vizState[schema.mapTo] || schema?.props?.defaultSelections[0]?.id,
-          handleButtonChange: handleConfigurationChange(schema.mapTo),
           vizState,
           ...schema.props,
         };
-      } else if (schema.eleType === 'switch') {
-        let isDisabled = false;
-        if(schema.name === 'Time') {
-          const isTimeAvailable = rawData && rawData.find(data => data.timestamp !== undefined);
-          isDisabled = isTimeAvailable === undefined ? true : false;
+        const DimensionComponent = schema.component || ButtonGroupItem;
+        if (schema.eleType === 'buttons') {
+          params = {
+            title: schema.name,
+            legend: schema.name,
+            groupOptions: schema?.props?.options.map((btn: { name: string }) => ({
+              ...btn,
+              label: btn.name,
+            })),
+            idSelected: vizState[schema.mapTo] || schema?.props?.defaultSelections[0]?.id,
+            handleButtonChange: handleConfigurationChange(schema.mapTo),
+            vizState,
+            ...schema.props,
+          };
+        } else if (schema.eleType === 'switch') {
+          let isDisabled = false;
+          if (schema.name === 'Time') {
+            const isTimeAvailable = rawData && rawData.find((data) => data.timestamp !== undefined);
+            isDisabled = isTimeAvailable === undefined ? true : false;
+          }
+          params = {
+            label: schema.name,
+            disabled: isDisabled,
+            checked:
+              vizState[schema.mapTo] !== undefined ? vizState[schema.mapTo] : schema?.defaultState,
+            handleChange: handleConfigurationChange(schema.mapTo),
+            vizState,
+            ...schema.props,
+          };
+        } else {
+          params = {
+            title: schema.name,
+            currentValue: vizState[schema.mapTo] || '',
+            handleInputChange: handleConfigurationChange(schema.mapTo),
+            vizState,
+            ...schema.props,
+          };
         }
-        params = {
-          label: schema.name,
-          disabled: isDisabled,
-          checked: vizState[schema.mapTo] !== undefined ? vizState[schema.mapTo] : schema?.defaultState,
-          handleChange: handleConfigurationChange(schema.mapTo),
-          vizState,
-          ...schema.props,
-        };
-      } else {
-        params = {
-          title: schema.name,
-          currentValue: vizState[schema.mapTo] || '',
-          handleInputChange: handleConfigurationChange(schema.mapTo),
-          vizState,
-          ...schema.props,
-        };
-      }
-      return (
-        <>
-          <DimensionComponent key={`viz-series-${index}`} {...params} />
-          <EuiSpacer size="s" />
-        </>
-      )
-    })
-    , [schemas, vizState, handleConfigurationChange]);
+        return (
+          <>
+            <DimensionComponent key={`viz-series-${index}`} {...params} />
+            <EuiSpacer size="s" />
+          </>
+        );
+      }),
+    [schemas, vizState, handleConfigurationChange]
+  );
 
   return (
-    <EuiAccordion initialIsOpen id={`configPanel__${sectionId}`} buttonContent={sectionName} paddingSize="s">
+    <EuiAccordion
+      initialIsOpen
+      id={`configPanel__${sectionId}`}
+      buttonContent={sectionName}
+      paddingSize="s"
+    >
       {dimensions}
     </EuiAccordion>
   );
