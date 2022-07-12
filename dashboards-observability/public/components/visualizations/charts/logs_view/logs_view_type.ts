@@ -34,7 +34,7 @@ export const createLogsViewTypeDefinition = (params: any = {}) => ({
     panelTabs: [
       {
         id: 'data-panel',
-        name: 'Data',
+        name: 'Style',
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [
@@ -52,25 +52,25 @@ export const createLogsViewTypeDefinition = (params: any = {}) => ({
                 eleType: 'switch',
               },
               {
-                name: 'Wrap lines',
-                component: ConfigSwitch,
-                mapTo: 'wrapLines',
-                defaultState: false,
-                eleType: 'switch',
-              },
-              {
-                name: 'Prettify JSON',
-                component: ConfigSwitch,
-                mapTo: 'prettifyJSON',
-                defaultState: false,
-                eleType: 'switch',
-              },
-              {
-                name: 'Enable log details',
+                name: 'Log Details View',
                 component: ConfigSwitch,
                 mapTo: 'enableLogDetails',
                 defaultState: true,
                 eleType: 'switch',
+              },
+              {
+                name: 'View',
+                mapTo: 'view',
+                component: ButtonGroupItem,
+                props: {
+                  options: [
+                    { name: 'Default', id: 'default' },
+                    { name: 'Wrap lines', id: 'wrapLines' },
+                    { name: 'Prettify JSON', id: 'prettifyJSON' },
+                  ],
+                  defaultSelections: [{ name: 'Default', id: 'default' }],
+                },
+                eleType: 'buttons',
               },
               {
                 name: 'Order',

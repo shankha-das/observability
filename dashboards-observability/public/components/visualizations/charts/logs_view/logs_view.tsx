@@ -13,10 +13,12 @@ export const LogsView = ({ visualizations }: any) => {
   const isTimeEnabled =
     dataConfig?.chartStyles?.time !== undefined ? dataConfig?.chartStyles?.time : true;
   const isWrapLinesEnabled =
-    dataConfig?.chartStyles?.wrapLines !== undefined ? dataConfig?.chartStyles?.wrapLines : false;
+    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'wrapLines'
+      ? true
+      : false;
   const isPrettifyJSONEnabled =
-    dataConfig?.chartStyles?.prettifyJSON !== undefined
-      ? dataConfig?.chartStyles?.prettifyJSON
+    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'prettifyJSON'
+      ? true
       : false;
   const isLogDetailsEnabled =
     dataConfig?.chartStyles?.enableLogDetails !== undefined
@@ -55,9 +57,13 @@ export const LogsView = ({ visualizations }: any) => {
           <table className="tableContainer">
             <tr>
               {isTimeEnabled && column1 !== '' && (
-                <td className='timeColumn'>{column1.substring(0, column1.indexOf('.'))}</td>
+                <td className="timeColumn">
+                  {column1.indexOf('.') !== -1
+                    ? column1.substring(0, column1.indexOf('.'))
+                    : column1}
+                </td>
               )}
-              <td className='wrapContent'>{jsxContent}</td>
+              <td className="wrapContent">{jsxContent}</td>
             </tr>
           </table>
         );
@@ -82,7 +88,10 @@ export const LogsView = ({ visualizations }: any) => {
         let stringContent = '';
         if (isTimeEnabled) {
           stringContent += Object.keys(log).reduce((val, key) => {
-            if (key === 'timestamp') return log[key].substring(0, log[key].indexOf('.')) + '  ';
+            if (key === 'timestamp')
+              return log[key].indexOf('.') !== -1
+                ? log[key].substring(0, log[key].indexOf('.')) + '  '
+                : log[key] + '  ';
             return val;
           });
         }
@@ -96,7 +105,7 @@ export const LogsView = ({ visualizations }: any) => {
         btnContent = (
           <table>
             <tr>
-              <td className='noWrapContent'>{jsxContent}</td>
+              <td className="noWrapContent">{jsxContent}</td>
             </tr>
           </table>
         );

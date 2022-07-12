@@ -44,6 +44,15 @@ tr:hover {
     font-size: inherit;
 }
 
+.euiAccordion__iconWrapper {
+    align-self: flex-start;
+    padding-top: 9px;
+}
+
+.euiAccordion__button:focus .euiAccordion__iconWrapper {
+    animation: none !important;
+}
+
 .columnData {
     padding-right: 10px;
 }

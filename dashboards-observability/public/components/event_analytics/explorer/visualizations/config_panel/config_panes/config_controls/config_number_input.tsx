@@ -27,6 +27,7 @@ export const InputFieldItem: React.FC<InputFieldProps> = ({
       fullWidth
       placeholder="auto"
       value={numValue}
+      min={1}
       onChange={(e) => handleInputChange(e.target.value)}
       data-test-subj="valueFieldNumber"
     />

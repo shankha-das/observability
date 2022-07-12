@@ -40,7 +40,7 @@ export const createMapsVisDefinition = () => ({
     panelTabs: [
       {
         id: 'data-panel',
-        name: 'Data',
+        name: 'Style',
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [

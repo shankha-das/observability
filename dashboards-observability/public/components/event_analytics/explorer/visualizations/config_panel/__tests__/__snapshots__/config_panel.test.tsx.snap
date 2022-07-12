@@ -211,7 +211,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
               "editor": [Function],
               "id": "data-panel",
               "mapTo": "dataConfig",
-              "name": "Data",
+              "name": "Style",
               "sections": Array [
                 Object {
                   "editor": [Function],
@@ -532,7 +532,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -816,7 +816,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -1073,7 +1073,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -1275,7 +1275,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -1603,7 +1603,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -1690,7 +1690,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -2049,7 +2049,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -2066,24 +2066,38 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                               },
                               Object {
                                 "component": [Function],
-                                "defaultState": false,
-                                "eleType": "switch",
-                                "mapTo": "wrapLines",
-                                "name": "Wrap lines",
-                              },
-                              Object {
-                                "component": [Function],
-                                "defaultState": false,
-                                "eleType": "switch",
-                                "mapTo": "prettifyJSON",
-                                "name": "Prettify JSON",
-                              },
-                              Object {
-                                "component": [Function],
                                 "defaultState": true,
                                 "eleType": "switch",
                                 "mapTo": "enableLogDetails",
-                                "name": "Enable log details",
+                                "name": "Log Details View",
+                              },
+                              Object {
+                                "component": [Function],
+                                "eleType": "buttons",
+                                "mapTo": "view",
+                                "name": "View",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "default",
+                                      "name": "Default",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "default",
+                                      "name": "Default",
+                                    },
+                                    Object {
+                                      "id": "wrapLines",
+                                      "name": "Wrap lines",
+                                    },
+                                    Object {
+                                      "id": "prettifyJSON",
+                                      "name": "Prettify JSON",
+                                    },
+                                  ],
+                                },
                               },
                               Object {
                                 "component": [Function],
@@ -2202,7 +2216,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         "editor": [Function],
                         "id": "data-panel",
                         "mapTo": "dataConfig",
-                        "name": "Data",
+                        "name": "Style",
                         "sections": Array [
                           Object {
                             "editor": [Function],
@@ -2520,7 +2534,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                             "editor": [Function],
                             "id": "data-panel",
                             "mapTo": "dataConfig",
-                            "name": "Data",
+                            "name": "Style",
                             "sections": Array [
                               Object {
                                 "editor": [Function],
@@ -2848,7 +2862,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                   "editor": [Function],
                                   "id": "data-panel",
                                   "mapTo": "dataConfig",
-                                  "name": "Data",
+                                  "name": "Style",
                                   "sections": Array [
                                     Object {
                                       "editor": [Function],
@@ -3105,7 +3119,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "editor": [Function],
                                     "id": "data-panel",
                                     "mapTo": "dataConfig",
-                                    "name": "Data",
+                                    "name": "Style",
                                     "sections": Array [
                                       Object {
                                         "editor": [Function],
@@ -3428,7 +3442,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "editor": [Function],
                                     "id": "data-panel",
                                     "mapTo": "dataConfig",
-                                    "name": "Data",
+                                    "name": "Style",
                                     "sections": Array [
                                       Object {
                                         "editor": [Function],
@@ -3721,7 +3735,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                         "editor": [Function],
                                         "id": "data-panel",
                                         "mapTo": "dataConfig",
-                                        "name": "Data",
+                                        "name": "Style",
                                         "sections": Array [
                                           Object {
                                             "editor": [Function],
@@ -4246,7 +4260,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                           "editor": [Function],
                           "id": "data-panel",
                           "mapTo": "dataConfig",
-                          "name": "Data",
+                          "name": "Style",
                           "sections": Array [
                             Object {
                               "editor": [Function],
@@ -4657,7 +4671,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                   "editor": [Function],
                                   "id": "data-panel",
                                   "mapTo": "dataConfig",
-                                  "name": "Data",
+                                  "name": "Style",
                                   "sections": Array [
                                     Object {
                                       "editor": [Function],
@@ -4940,7 +4954,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                       }
                     />,
                     "id": "data-panel",
-                    "name": "Data",
+                    "name": "Style",
                   }
                 }
                 tabs={
@@ -4954,7 +4968,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                             "editor": [Function],
                             "id": "data-panel",
                             "mapTo": "dataConfig",
-                            "name": "Data",
+                            "name": "Style",
                             "sections": Array [
                               Object {
                                 "editor": [Function],
@@ -5365,7 +5379,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "editor": [Function],
                                     "id": "data-panel",
                                     "mapTo": "dataConfig",
-                                    "name": "Data",
+                                    "name": "Style",
                                     "sections": Array [
                                       Object {
                                         "editor": [Function],
@@ -5648,7 +5662,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                         }
                       />,
                       "id": "data-panel",
-                      "name": "Data",
+                      "name": "Style",
                     },
                     Object {
                       "content": <ConfigEditor
@@ -5873,7 +5887,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "editor": [Function],
                                     "id": "data-panel",
                                     "mapTo": "dataConfig",
-                                    "name": "Data",
+                                    "name": "Style",
                                     "sections": Array [
                                       Object {
                                         "editor": [Function],
@@ -6187,7 +6201,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                           <span
                             className="euiTab__content"
                           >
-                            Data
+                            Style
                           </span>
                         </button>
                       </EuiTab>
@@ -6254,7 +6268,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                           "editor": [Function],
                           "id": "data-panel",
                           "mapTo": "dataConfig",
-                          "name": "Data",
+                          "name": "Style",
                           "sections": Array [
                             Object {
                               "editor": [Function],
@@ -6665,7 +6679,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                   "editor": [Function],
                                   "id": "data-panel",
                                   "mapTo": "dataConfig",
-                                  "name": "Data",
+                                  "name": "Style",
                                   "sections": Array [
                                     Object {
                                       "editor": [Function],
@@ -7169,7 +7183,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "editor": [Function],
                                                 "id": "data-panel",
                                                 "mapTo": "dataConfig",
-                                                "name": "Data",
+                                                "name": "Style",
                                                 "sections": Array [
                                                   Object {
                                                     "editor": [Function],
@@ -7915,7 +7929,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "editor": [Function],
                                                 "id": "data-panel",
                                                 "mapTo": "dataConfig",
-                                                "name": "Data",
+                                                "name": "Style",
                                                 "sections": Array [
                                                   Object {
                                                     "editor": [Function],
@@ -9071,7 +9085,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "editor": [Function],
                                                 "id": "data-panel",
                                                 "mapTo": "dataConfig",
-                                                "name": "Data",
+                                                "name": "Style",
                                                 "sections": Array [
                                                   Object {
                                                     "editor": [Function],
@@ -10325,7 +10339,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "editor": [Function],
                                                 "id": "data-panel",
                                                 "mapTo": "dataConfig",
-                                                "name": "Data",
+                                                "name": "Style",
                                                 "sections": Array [
                                                   Object {
                                                     "editor": [Function],
@@ -13136,7 +13150,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "editor": [Function],
                                                 "id": "data-panel",
                                                 "mapTo": "dataConfig",
-                                                "name": "Data",
+                                                "name": "Style",
                                                 "sections": Array [
                                                   Object {
                                                     "editor": [Function],
