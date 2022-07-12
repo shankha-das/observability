@@ -135,7 +135,7 @@ export const ConfigPanel = ({ visualizations, setCurVisId, callback, changeIsVal
 
   useEffect(() => changeIsValidConfigOptionState(Boolean(isValidValueOptionConfigSelected)), [isValidValueOptionConfigSelected]);
 
-  const handleConfigUpdate = useCallback(() => {
+  const handleConfigUpdate = useCallback((updatedConfigs) => {
     try {
       if (!isValidValueOptionConfigSelected) {
         setToast(`Invalid value options configuration selected.`, 'danger');
@@ -146,8 +146,8 @@ export const ConfigPanel = ({ visualizations, setCurVisId, callback, changeIsVal
           vizId: curVisId,
           data: {
             ...{
-              ...vizConfigs,
-              layoutConfig: hjson.parse(vizConfigs.layoutConfig),
+              ...updatedConfigs,
+              layoutConfig: hjson.parse(updatedConfigs.layoutConfig),
             },
           },
         })
@@ -155,16 +155,18 @@ export const ConfigPanel = ({ visualizations, setCurVisId, callback, changeIsVal
     } catch (e: any) {
       setToast(`Invalid visualization configurations. error: ${e.message}`, 'danger');
     }
-  }, [tabId, vizConfigs, changeVisualizationConfig, dispatch, setToast, curVisId]);
+  }, [tabId, changeVisualizationConfig, dispatch, setToast, curVisId]);
 
   const handleConfigChange = (configSchema: string) => {
     return (configChanges: any) => {
+      const updatedVizConfigs = { ...vizConfigs, [configSchema]: configChanges };
       setVizConfigs((staleState) => {
         return {
           ...staleState,
           [configSchema]: configChanges,
         };
       });
+      handleConfigUpdate(updatedVizConfigs);
     };
   };
 
@@ -275,6 +277,7 @@ export const ConfigPanel = ({ visualizations, setCurVisId, callback, changeIsVal
             }}
             fullWidth
             renderOption={vizSelectableItemRenderer}
+            isClearable={false}
           />
           <EuiSpacer size="xs" />
         </EuiFlexItem>
