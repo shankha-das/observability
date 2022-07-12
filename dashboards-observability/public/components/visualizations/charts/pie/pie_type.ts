@@ -96,11 +96,10 @@ export const createPieTypeDefinition = (params: any) => ({
                 mapTo: 'tooltipMode',
                 props: {
                   options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Single', id: 'single' },
+                    { name: 'Show', id: 'show' },
                     { name: 'Hidden', id: 'hidden' },
                   ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
+                  defaultSelections: [{ name: 'Show', id: 'show' }],
                 },
               },
               {

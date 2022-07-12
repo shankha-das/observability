@@ -247,18 +247,14 @@ exports[`Pie component Renders pie component 1`] = `
                       "props": Object {
                         "defaultSelections": Array [
                           Object {
-                            "id": "all",
-                            "name": "All",
+                            "id": "show",
+                            "name": "Show",
                           },
                         ],
                         "options": Array [
                           Object {
-                            "id": "all",
-                            "name": "All",
-                          },
-                          Object {
-                            "id": "single",
-                            "name": "Single",
+                            "id": "show",
+                            "name": "Show",
                           },
                           Object {
                             "id": "hidden",
@@ -563,7 +559,14 @@ exports[`Pie component Renders pie component 1`] = `
           },
           "hole": 0,
           "hoverinfo": undefined,
-          "labels": undefined,
+          "labels": Array [
+            "error",
+            "info",
+            "login",
+            "security",
+            "success",
+            "warning",
+          ],
           "name": "count()",
           "outsidetextfont": Object {
             "size": undefined,
@@ -620,7 +623,14 @@ exports[`Pie component Renders pie component 1`] = `
             },
             "hole": 0,
             "hoverinfo": undefined,
-            "labels": undefined,
+            "labels": Array [
+              "error",
+              "info",
+              "login",
+              "security",
+              "success",
+              "warning",
+            ],
             "name": "count()",
             "outsidetextfont": Object {
               "size": undefined,

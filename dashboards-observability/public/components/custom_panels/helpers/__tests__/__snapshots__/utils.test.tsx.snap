@@ -121,18 +121,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                         "props": Object {
                           "defaultSelections": Array [
                             Object {
-                              "id": "all",
-                              "name": "All",
+                              "id": "show",
+                              "name": "Show",
                             },
                           ],
                           "options": Array [
                             Object {
-                              "id": "all",
-                              "name": "All",
-                            },
-                            Object {
-                              "id": "single",
-                              "name": "Single",
+                              "id": "show",
+                              "name": "Show",
                             },
                             Object {
                               "id": "hidden",
@@ -544,18 +540,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                           "props": Object {
                             "defaultSelections": Array [
                               Object {
-                                "id": "all",
-                                "name": "All",
+                                "id": "show",
+                                "name": "Show",
                               },
                             ],
                             "options": Array [
                               Object {
-                                "id": "all",
-                                "name": "All",
-                              },
-                              Object {
-                                "id": "single",
-                                "name": "Single",
+                                "id": "show",
+                                "name": "Show",
                               },
                               Object {
                                 "id": "hidden",
@@ -990,18 +982,14 @@ exports[`Utils helper functions renders displayVisualization function 1`] = `
                             "props": Object {
                               "defaultSelections": Array [
                                 Object {
-                                  "id": "all",
-                                  "name": "All",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                               ],
                               "options": Array [
                                 Object {
-                                  "id": "all",
-                                  "name": "All",
-                                },
-                                Object {
-                                  "id": "single",
-                                  "name": "Single",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                                 Object {
                                   "id": "hidden",
@@ -1630,18 +1618,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                         "props": Object {
                           "defaultSelections": Array [
                             Object {
-                              "id": "all",
-                              "name": "All",
+                              "id": "show",
+                              "name": "Show",
                             },
                           ],
                           "options": Array [
                             Object {
-                              "id": "all",
-                              "name": "All",
-                            },
-                            Object {
-                              "id": "single",
-                              "name": "Single",
+                              "id": "show",
+                              "name": "Show",
                             },
                             Object {
                               "id": "hidden",
@@ -2025,18 +2009,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                           "props": Object {
                             "defaultSelections": Array [
                               Object {
-                                "id": "all",
-                                "name": "All",
+                                "id": "show",
+                                "name": "Show",
                               },
                             ],
                             "options": Array [
                               Object {
-                                "id": "all",
-                                "name": "All",
-                              },
-                              Object {
-                                "id": "single",
-                                "name": "Single",
+                                "id": "show",
+                                "name": "Show",
                               },
                               Object {
                                 "id": "hidden",
@@ -2474,18 +2454,14 @@ exports[`Utils helper functions renders displayVisualization function 2`] = `
                             "props": Object {
                               "defaultSelections": Array [
                                 Object {
-                                  "id": "all",
-                                  "name": "All",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                               ],
                               "options": Array [
                                 Object {
-                                  "id": "all",
-                                  "name": "All",
-                                },
-                                Object {
-                                  "id": "single",
-                                  "name": "Single",
+                                  "id": "show",
+                                  "name": "Show",
                                 },
                                 Object {
                                   "id": "hidden",

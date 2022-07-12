@@ -246,18 +246,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                       "props": Object {
                         "defaultSelections": Array [
                           Object {
-                            "id": "all",
-                            "name": "All",
+                            "id": "show",
+                            "name": "Show",
                           },
                         ],
                         "options": Array [
                           Object {
-                            "id": "all",
-                            "name": "All",
-                          },
-                          Object {
-                            "id": "single",
-                            "name": "Single",
+                            "id": "show",
+                            "name": "Show",
                           },
                           Object {
                             "id": "hidden",
@@ -629,18 +625,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -1009,18 +1001,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -1334,18 +1322,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -1542,18 +1526,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -2023,18 +2003,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -2066,6 +2042,37 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     Object {
                                       "id": "value",
                                       "name": "Value",
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                          Object {
+                            "editor": [Function],
+                            "id": "legend",
+                            "mapTo": "legend",
+                            "name": "Legend",
+                            "schemas": Array [
+                              Object {
+                                "component": null,
+                                "mapTo": "showLegend",
+                                "name": "Show Colorscale",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": "show",
+                                      "name": "Show",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "show",
+                                      "name": "Show",
+                                    },
+                                    Object {
+                                      "id": "hidden",
+                                      "name": "Hidden",
                                     },
                                   ],
                                 },
@@ -2118,6 +2125,30 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 ],
                                 "props": Object {
                                   "isClearable": false,
+                                },
+                              },
+                              Object {
+                                "component": [Function],
+                                "eleType": "buttons",
+                                "mapTo": "sort_sectors",
+                                "name": "Sort Sectors",
+                                "props": Object {
+                                  "defaultSelections": Array [
+                                    Object {
+                                      "id": undefined,
+                                      "name": "Largest to Smallest",
+                                    },
+                                  ],
+                                  "options": Array [
+                                    Object {
+                                      "id": "largest_to_smallest",
+                                      "name": "Largest to Smallest",
+                                    },
+                                    Object {
+                                      "id": "random",
+                                      "name": "Random",
+                                    },
+                                  ],
                                 },
                               },
                             ],
@@ -2471,18 +2502,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                 "props": Object {
                                   "defaultSelections": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                   ],
                                   "options": Array [
                                     Object {
-                                      "id": "all",
-                                      "name": "All",
-                                    },
-                                    Object {
-                                      "id": "single",
-                                      "name": "Single",
+                                      "id": "show",
+                                      "name": "Show",
                                     },
                                     Object {
                                       "id": "hidden",
@@ -2851,18 +2878,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "props": Object {
                                       "defaultSelections": Array [
                                         Object {
-                                          "id": "all",
-                                          "name": "All",
+                                          "id": "show",
+                                          "name": "Show",
                                         },
                                       ],
                                       "options": Array [
                                         Object {
-                                          "id": "all",
-                                          "name": "All",
-                                        },
-                                        Object {
-                                          "id": "single",
-                                          "name": "Single",
+                                          "id": "show",
+                                          "name": "Show",
                                         },
                                         Object {
                                           "id": "hidden",
@@ -3241,18 +3264,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                           "props": Object {
                                             "defaultSelections": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                             ],
                                             "options": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
-                                              },
-                                              Object {
-                                                "id": "single",
-                                                "name": "Single",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                               Object {
                                                 "id": "hidden",
@@ -3560,18 +3579,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                             "props": Object {
                                               "defaultSelections": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                               ],
                                               "options": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
-                                                },
-                                                Object {
-                                                  "id": "single",
-                                                  "name": "Single",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                                 Object {
                                                   "id": "hidden",
@@ -3945,18 +3960,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                             "props": Object {
                                               "defaultSelections": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                               ],
                                               "options": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
-                                                },
-                                                Object {
-                                                  "id": "single",
-                                                  "name": "Single",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                                 Object {
                                                   "id": "hidden",
@@ -4300,18 +4311,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                 "props": Object {
                                                   "defaultSelections": Array [
                                                     Object {
-                                                      "id": "all",
-                                                      "name": "All",
+                                                      "id": "show",
+                                                      "name": "Show",
                                                     },
                                                   ],
                                                   "options": Array [
                                                     Object {
-                                                      "id": "all",
-                                                      "name": "All",
-                                                    },
-                                                    Object {
-                                                      "id": "single",
-                                                      "name": "Single",
+                                                      "id": "show",
+                                                      "name": "Show",
                                                     },
                                                     Object {
                                                       "id": "hidden",
@@ -4887,18 +4894,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                   "props": Object {
                                     "defaultSelections": Array [
                                       Object {
-                                        "id": "all",
-                                        "name": "All",
+                                        "id": "show",
+                                        "name": "Show",
                                       },
                                     ],
                                     "options": Array [
                                       Object {
-                                        "id": "all",
-                                        "name": "All",
-                                      },
-                                      Object {
-                                        "id": "single",
-                                        "name": "Single",
+                                        "id": "show",
+                                        "name": "Show",
                                       },
                                       Object {
                                         "id": "hidden",
@@ -5360,18 +5363,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                           "props": Object {
                                             "defaultSelections": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                             ],
                                             "options": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
-                                              },
-                                              Object {
-                                                "id": "single",
-                                                "name": "Single",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                               Object {
                                                 "id": "hidden",
@@ -5719,18 +5718,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                     "props": Object {
                                       "defaultSelections": Array [
                                         Object {
-                                          "id": "all",
-                                          "name": "All",
+                                          "id": "show",
+                                          "name": "Show",
                                         },
                                       ],
                                       "options": Array [
                                         Object {
-                                          "id": "all",
-                                          "name": "All",
-                                        },
-                                        Object {
-                                          "id": "single",
-                                          "name": "Single",
+                                          "id": "show",
+                                          "name": "Show",
                                         },
                                         Object {
                                           "id": "hidden",
@@ -6192,18 +6187,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                             "props": Object {
                                               "defaultSelections": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                               ],
                                               "options": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
-                                                },
-                                                Object {
-                                                  "id": "single",
-                                                  "name": "Single",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                                 Object {
                                                   "id": "hidden",
@@ -6762,18 +6753,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                             "props": Object {
                                               "defaultSelections": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                               ],
                                               "options": Array [
                                                 Object {
-                                                  "id": "all",
-                                                  "name": "All",
-                                                },
-                                                Object {
-                                                  "id": "single",
-                                                  "name": "Single",
+                                                  "id": "show",
+                                                  "name": "Show",
                                                 },
                                                 Object {
                                                   "id": "hidden",
@@ -7205,18 +7192,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                   "props": Object {
                                     "defaultSelections": Array [
                                       Object {
-                                        "id": "all",
-                                        "name": "All",
+                                        "id": "show",
+                                        "name": "Show",
                                       },
                                     ],
                                     "options": Array [
                                       Object {
-                                        "id": "all",
-                                        "name": "All",
-                                      },
-                                      Object {
-                                        "id": "single",
-                                        "name": "Single",
+                                        "id": "show",
+                                        "name": "Show",
                                       },
                                       Object {
                                         "id": "hidden",
@@ -7678,18 +7661,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                           "props": Object {
                                             "defaultSelections": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                             ],
                                             "options": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
-                                              },
-                                              Object {
-                                                "id": "single",
-                                                "name": "Single",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                               Object {
                                                 "id": "hidden",
@@ -8244,18 +8223,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
@@ -9052,18 +9027,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
@@ -9999,18 +9970,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                           "props": Object {
                                             "defaultSelections": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                             ],
                                             "options": Array [
                                               Object {
-                                                "id": "all",
-                                                "name": "All",
-                                              },
-                                              Object {
-                                                "id": "single",
-                                                "name": "Single",
+                                                "id": "show",
+                                                "name": "Show",
                                               },
                                               Object {
                                                 "id": "hidden",
@@ -10278,18 +10245,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
@@ -10660,22 +10623,17 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                   defaultSelections={
                                                     Array [
                                                       Object {
-                                                        "id": "all",
-                                                        "name": "All",
+                                                        "id": "show",
+                                                        "name": "Show",
                                                       },
                                                     ]
                                                   }
                                                   groupOptions={
                                                     Array [
                                                       Object {
-                                                        "id": "all",
-                                                        "label": "All",
-                                                        "name": "All",
-                                                      },
-                                                      Object {
-                                                        "id": "single",
-                                                        "label": "Single",
-                                                        "name": "Single",
+                                                        "id": "show",
+                                                        "label": "Show",
+                                                        "name": "Show",
                                                       },
                                                       Object {
                                                         "id": "hidden",
@@ -10685,18 +10643,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                     ]
                                                   }
                                                   handleButtonChange={[Function]}
-                                                  idSelected="all"
+                                                  idSelected="show"
                                                   key="viz-series-0"
                                                   legend="Tooltip mode"
                                                   options={
                                                     Array [
                                                       Object {
-                                                        "id": "all",
-                                                        "name": "All",
-                                                      },
-                                                      Object {
-                                                        "id": "single",
-                                                        "name": "Single",
+                                                        "id": "show",
+                                                        "name": "Show",
                                                       },
                                                       Object {
                                                         "id": "hidden",
@@ -10733,7 +10687,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                     <EuiButtonGroup
                                                       buttonSize="compressed"
                                                       id="random_html_id"
-                                                      idSelected="all"
+                                                      idSelected="show"
                                                       isFullWidth={false}
                                                       legend="Tooltip mode"
                                                       name="Tooltip mode"
@@ -10741,14 +10695,9 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                       options={
                                                         Array [
                                                           Object {
-                                                            "id": "all",
-                                                            "label": "All",
-                                                            "name": "All",
-                                                          },
-                                                          Object {
-                                                            "id": "single",
-                                                            "label": "Single",
-                                                            "name": "Single",
+                                                            "id": "show",
+                                                            "label": "Show",
+                                                            "name": "Show",
                                                           },
                                                           Object {
                                                             "id": "hidden",
@@ -10776,13 +10725,13 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                           <EuiButtonGroupButton
                                                             color="text"
                                                             element="label"
-                                                            id="all"
+                                                            id="show"
                                                             isDisabled={false}
                                                             isIconOnly={false}
                                                             isSelected={true}
                                                             key="0"
-                                                            label="All"
-                                                            name="All"
+                                                            label="Show"
+                                                            name="Show"
                                                             onChange={[Function]}
                                                             size="compressed"
                                                           >
@@ -10799,9 +10748,9 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                               textProps={
                                                                 Object {
                                                                   "className": "euiButtonGroupButton__textShift",
-                                                                  "data-text": "All",
+                                                                  "data-text": "Show",
                                                                   "ref": [Function],
-                                                                  "title": "All",
+                                                                  "title": "Show",
                                                                 }
                                                               }
                                                             >
@@ -10822,9 +10771,9 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                                   textProps={
                                                                     Object {
                                                                       "className": "euiButton__text euiButtonGroupButton__textShift",
-                                                                      "data-text": "All",
+                                                                      "data-text": "Show",
                                                                       "ref": [Function],
-                                                                      "title": "All",
+                                                                      "title": "Show",
                                                                     }
                                                                   }
                                                                 >
@@ -10833,100 +10782,20 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                                   >
                                                                     <span
                                                                       className="euiButton__text euiButtonGroupButton__textShift"
-                                                                      data-text="All"
-                                                                      title="All"
+                                                                      data-text="Show"
+                                                                      title="Show"
                                                                     >
                                                                       <input
                                                                         checked={true}
                                                                         className="euiScreenReaderOnly"
-                                                                        data-test-subj="all"
+                                                                        data-test-subj="show"
                                                                         disabled={false}
                                                                         id="random_html_id"
-                                                                        name="All"
+                                                                        name="Show"
                                                                         onChange={[Function]}
                                                                         type="radio"
                                                                       />
-                                                                      All
-                                                                    </span>
-                                                                  </span>
-                                                                </EuiButtonContent>
-                                                              </label>
-                                                            </EuiButtonDisplay>
-                                                          </EuiButtonGroupButton>
-                                                          <EuiButtonGroupButton
-                                                            color="text"
-                                                            element="label"
-                                                            id="single"
-                                                            isDisabled={false}
-                                                            isIconOnly={false}
-                                                            isSelected={false}
-                                                            key="1"
-                                                            label="Single"
-                                                            name="Single"
-                                                            onChange={[Function]}
-                                                            size="compressed"
-                                                          >
-                                                            <EuiButtonDisplay
-                                                              baseClassName="euiButtonGroupButton"
-                                                              className=""
-                                                              color="text"
-                                                              element="label"
-                                                              fill={false}
-                                                              htmlFor="random_html_id"
-                                                              isDisabled={false}
-                                                              onClick={[Function]}
-                                                              size="s"
-                                                              textProps={
-                                                                Object {
-                                                                  "className": "euiButtonGroupButton__textShift",
-                                                                  "data-text": "Single",
-                                                                  "ref": [Function],
-                                                                  "title": "Single",
-                                                                }
-                                                              }
-                                                            >
-                                                              <label
-                                                                className="euiButtonGroupButton euiButtonGroupButton--text euiButtonGroupButton--small"
-                                                                disabled={false}
-                                                                htmlFor="random_html_id"
-                                                                onClick={[Function]}
-                                                                style={
-                                                                  Object {
-                                                                    "minWidth": undefined,
-                                                                  }
-                                                                }
-                                                              >
-                                                                <EuiButtonContent
-                                                                  className="euiButton__content"
-                                                                  iconSide="left"
-                                                                  textProps={
-                                                                    Object {
-                                                                      "className": "euiButton__text euiButtonGroupButton__textShift",
-                                                                      "data-text": "Single",
-                                                                      "ref": [Function],
-                                                                      "title": "Single",
-                                                                    }
-                                                                  }
-                                                                >
-                                                                  <span
-                                                                    className="euiButtonContent euiButton__content"
-                                                                  >
-                                                                    <span
-                                                                      className="euiButton__text euiButtonGroupButton__textShift"
-                                                                      data-text="Single"
-                                                                      title="Single"
-                                                                    >
-                                                                      <input
-                                                                        checked={false}
-                                                                        className="euiScreenReaderOnly"
-                                                                        data-test-subj="single"
-                                                                        disabled={false}
-                                                                        id="random_html_id"
-                                                                        name="Single"
-                                                                        onChange={[Function]}
-                                                                        type="radio"
-                                                                      />
-                                                                      Single
+                                                                      Show
                                                                     </span>
                                                                   </span>
                                                                 </EuiButtonContent>
@@ -10940,7 +10809,7 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                             isDisabled={false}
                                                             isIconOnly={false}
                                                             isSelected={false}
-                                                            key="2"
+                                                            key="1"
                                                             label="Hidden"
                                                             name="Hidden"
                                                             onChange={[Function]}
@@ -11704,18 +11573,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
@@ -13020,18 +12885,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
@@ -15893,18 +15754,14 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                                                         "props": Object {
                                                           "defaultSelections": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                           ],
                                                           "options": Array [
                                                             Object {
-                                                              "id": "all",
-                                                              "name": "All",
-                                                            },
-                                                            Object {
-                                                              "id": "single",
-                                                              "name": "Single",
+                                                              "id": "show",
+                                                              "name": "Show",
                                                             },
                                                             Object {
                                                               "id": "hidden",
