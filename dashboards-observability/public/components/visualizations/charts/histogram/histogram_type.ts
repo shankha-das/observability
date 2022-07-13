@@ -13,6 +13,7 @@ import {
   SliderConfig,
   ConfigColorTheme,
   ConfigThresholds,
+  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
 
@@ -74,6 +75,39 @@ export const createHistogramVisDefinition = (params = {}) => ({
             editor: ConfigColorTheme,
             mapTo: 'colorTheme',
             schemas: [],
+          },
+          {
+            id: 'tooltip_options',
+            name: 'Tooltip options',
+            editor: ConfigTooltip,
+            mapTo: 'tooltipOptions',
+            schemas: [
+              {
+                name: 'Tooltip mode',
+                component: null,
+                mapTo: 'tooltipMode',
+                props: {
+                  options: [
+                    { name: 'Show', id: 'show' },
+                    { name: 'Hidden', id: 'hidden' },
+                  ],
+                  defaultSelections: [{ name: 'Show', id: 'show' }],
+                },
+              },
+              {
+                name: 'Tooltip text',
+                component: null,
+                mapTo: 'tooltipText',
+                props: {
+                  options: [
+                    { name: 'All', id: 'all' },
+                    { name: 'Dimension', id: 'x' },
+                    { name: 'Metrics', id: 'y' },
+                  ],
+                  defaultSelections: [{ name: 'All', id: 'all' }],
+                },
+              },
+            ],
           },
           {
             id: 'legend',
