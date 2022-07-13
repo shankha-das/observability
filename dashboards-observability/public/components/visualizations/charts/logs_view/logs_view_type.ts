@@ -73,19 +73,6 @@ export const createLogsViewTypeDefinition = (params: any = {}) => ({
                 eleType: 'buttons',
               },
               {
-                name: 'Order',
-                mapTo: 'order',
-                component: ButtonGroupItem,
-                props: {
-                  options: [
-                    { name: 'Newest first ', id: 'newestFirst' },
-                    { name: 'Oldest first ', id: 'oldestFirst' },
-                  ],
-                  defaultSelections: [{ name: 'Newest first ', id: 'newestFirst' }],
-                },
-                eleType: 'buttons',
-              },
-              {
                 name: 'Label Size',
                 component: InputFieldItem,
                 mapTo: 'labelSize',

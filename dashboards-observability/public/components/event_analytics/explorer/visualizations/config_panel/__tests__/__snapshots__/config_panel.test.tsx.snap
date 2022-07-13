@@ -2428,30 +2428,6 @@ exports[`Config panel component Renders config panel with visualization data 1`]
                               },
                               Object {
                                 "component": [Function],
-                                "eleType": "buttons",
-                                "mapTo": "order",
-                                "name": "Order",
-                                "props": Object {
-                                  "defaultSelections": Array [
-                                    Object {
-                                      "id": "newestFirst",
-                                      "name": "Newest first ",
-                                    },
-                                  ],
-                                  "options": Array [
-                                    Object {
-                                      "id": "newestFirst",
-                                      "name": "Newest first ",
-                                    },
-                                    Object {
-                                      "id": "oldestFirst",
-                                      "name": "Oldest first ",
-                                    },
-                                  ],
-                                },
-                              },
-                              Object {
-                                "component": [Function],
                                 "eleType": "input",
                                 "mapTo": "labelSize",
                                 "name": "Label Size",

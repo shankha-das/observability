@@ -24,32 +24,14 @@ export const LogsView = ({ visualizations }: any) => {
     dataConfig?.chartStyles?.enableLogDetails !== undefined
       ? dataConfig?.chartStyles?.enableLogDetails
       : true;
-  const isOldestFirst = dataConfig?.chartStyles?.order === 'oldestFirst';
   const labelSize =
     dataConfig?.chartStyles?.labelSize !== undefined
       ? dataConfig?.chartStyles?.labelSize + 'px'
       : '14px';
   const rawData = explorerData.jsonData;
-  const sortedRawData = [...rawData];
-  sortedRawData.sort(function (firstData: any, secondData: any) {
-    if (
-      firstData.timestamp === undefined ||
-      secondData.timestamp === undefined ||
-      firstData.new_timestamp === undefined ||
-      secondData.new_timestamp === undefined
-    )
-      return 1;
-    const firstTime = new Date(
-      firstData.timestamp !== undefined ? firstData.timestamp : firstData.new_timestamp
-    );
-    const secondTime = new Date(
-      secondData.timestamp !== undefined ? secondData.timestamp : secondData.new_timestamp
-    );
-    return isOldestFirst ? firstTime - secondTime : secondTime - firstTime;
-  });
   const logs =
-    sortedRawData &&
-    sortedRawData.map((log, index) => {
+    rawData &&
+    rawData.map((log, index) => {
       let btnContent: JSX.Element;
       if (isWrapLinesEnabled) {
         const column1 = Object.keys(log).reduce((val, key) => {
