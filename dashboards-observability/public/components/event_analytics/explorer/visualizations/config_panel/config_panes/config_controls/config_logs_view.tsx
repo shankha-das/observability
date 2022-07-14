@@ -62,7 +62,7 @@ export const ConfigLogsView = ({
               rawData.find(
                 (data) => data.timestamp !== undefined || data.new_timestamp !== undefined
               );
-            isDisabled = isTimeAvailable === undefined ? true : false;
+            isDisabled = isTimeAvailable === undefined;
           }
           params = {
             label: schema.name,

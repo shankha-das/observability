@@ -13,13 +13,9 @@ export const LogsView = ({ visualizations }: any) => {
   const isTimeEnabled =
     dataConfig?.chartStyles?.time !== undefined ? dataConfig?.chartStyles?.time : true;
   const isWrapLinesEnabled =
-    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'wrapLines'
-      ? true
-      : false;
+    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'wrapLines';
   const isPrettifyJSONEnabled =
-    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'prettifyJSON'
-      ? true
-      : false;
+    dataConfig?.chartStyles?.view !== undefined && dataConfig?.chartStyles?.view === 'prettifyJSON';
   const isLogDetailsEnabled =
     dataConfig?.chartStyles?.enableLogDetails !== undefined
       ? dataConfig?.chartStyles?.enableLogDetails
@@ -29,18 +25,44 @@ export const LogsView = ({ visualizations }: any) => {
       ? dataConfig?.chartStyles?.labelSize + 'px'
       : '14px';
   const rawData = explorerData.jsonData;
+  const { queriedFields = [], availableFields = [] } = visualizations?.data?.indexFields;
+
+  const isTimestamp = (key: any) => {
+    if (queriedFields.length !== 0) {
+      for (const { name, type } of queriedFields) {
+        if (name === key && type === 'timestamp') return true;
+      }
+    } else {
+      for (const { name, type } of availableFields) {
+        if (name === key && type === 'timestamp') return true;
+      }
+    }
+    return false;
+  };
+
+  const fetchTimestamp = (obj: any) => {
+    for (const key of Object.keys(obj)) {
+      if (queriedFields.length !== 0) {
+        for (const { name, type } of queriedFields) {
+          if (name === key && type === 'timestamp') return key;
+        }
+      }
+    }
+    return null;
+  };
+
   const logs =
     rawData &&
     rawData.map((log, index) => {
       let btnContent: JSX.Element;
       if (isWrapLinesEnabled) {
         const column1 = Object.keys(log).reduce((val, key) => {
-          if (key === 'timestamp' || key === 'new_timestamp') return log[key] + '  ';
+          if (isTimestamp(key)) return `${log[key]}  `;
           return val;
         }, '');
         let column2 = '';
         for (const [key, val] of Object.entries(log)) {
-          if (key !== 'timestamp' && key !== 'new_timestamp') column2 += key + '="' + val + '"  ';
+          if (!isTimestamp(key)) column2 += `${key}="${val}"  `;
         }
         const jsxContent = column2
           .split('  ')
@@ -60,15 +82,21 @@ export const LogsView = ({ visualizations }: any) => {
           </table>
         );
       } else if (isPrettifyJSONEnabled) {
-        const { timestamp, new_timestamp, ...others } = log;
         let columnContent;
-        if (isTimeEnabled && timestamp !== undefined) {
-          columnContent = JSON.stringify({ timestamp, ...others }, null, '\t');
-        } else if (isTimeEnabled && new_timestamp !== undefined) {
-          columnContent = JSON.stringify({ new_timestamp, ...others }, null, '\t');
-        } else {
-          columnContent = JSON.stringify(others, null, '\t');
+        let { timestamp } = log;
+        if (timestamp === undefined) timestamp = fetchTimestamp(log);
+
+        let newLog: any = {};
+        for (const key of Object.keys(log)) {
+          if (key !== timestamp) newLog[key] = log[key];
         }
+
+        if (isTimeEnabled && timestamp !== null) {
+          columnContent = JSON.stringify({ timestamp: log[timestamp], ...newLog }, null, '\t');
+        } else {
+          columnContent = JSON.stringify(newLog, null, '\t');
+        }
+
         btnContent = (
           <table className="tableContainer">
             <tr>
@@ -82,16 +110,16 @@ export const LogsView = ({ visualizations }: any) => {
         let stringContent = '';
         if (isTimeEnabled) {
           stringContent += Object.keys(log).reduce((val, key) => {
-            if (key === 'timestamp' || key === 'new_timestamp')
+            if (isTimestamp(key))
               return log[key].indexOf('.') !== -1
                 ? log[key].substring(0, log[key].indexOf('.')) + '  '
                 : log[key] + '  ';
             return val;
-          });
+          }, '');
         }
         for (const [key, val] of Object.entries(log)) {
-          if (key === 'timestamp' || key === 'new_timestamp') continue;
-          stringContent += key + '="' + val + '"  ';
+          if (isTimestamp(key)) continue;
+          stringContent += `${key}="${val}"  `;
         }
         const jsxContent = stringContent
           .split('  ')
