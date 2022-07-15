@@ -8,7 +8,7 @@ import { getPlotlySharedConfigs, getPlotlyCategory } from '../shared/shared_conf
 import { LensIconChartBar } from '../../assets/chart_bar';
 import { VizDataPanel } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/default_vis_editor';
 import { ConfigEditor } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/json_editor';
-import { ConfigTooltip, ConfigValueOptions } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
+import { ConfigValueOptions } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { ConfigAvailability } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
 import { ButtonGroupItem } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_button_group';
 import { ConfigBarChartStyles } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_bar_chart_styles';
@@ -16,6 +16,7 @@ import { SliderConfig } from '../../../event_analytics/explorer/visualizations/c
 import { ConfigLegend } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_legend';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
 import { ConfigColorTheme } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_color_theme';
+import { fetchConfigObject } from '../shared/helper';
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
 
@@ -72,39 +73,14 @@ export const createBarTypeDefinition = (params: any) => ({
               },
             ],
           },
-          {
-            id: 'tooltip_options',
-            name: 'Tooltip options',
-            editor: ConfigTooltip,
-            mapTo: 'tooltipOptions',
-            schemas: [
-              {
-                name: 'Tooltip mode',
-                component: null,
-                mapTo: 'tooltipMode',
-                props: {
-                  options: [
-                    { name: 'Show', id: 'show' },
-                    { name: 'Hidden', id: 'hidden' },
-                  ],
-                  defaultSelections: [{ name: 'Show', id: 'show' }],
-                },
-              },
-              {
-                name: 'Tooltip text',
-                component: null,
-                mapTo: 'tooltipText',
-                props: {
-                  options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Dimension', id: 'x' },
-                    { name: 'Metrics', id: 'y' },
-                  ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
-                },
-              },
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Dimension', id: 'x' },
+              { name: 'Metrics', id: 'y' },
             ],
-          },
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'legend',
             name: 'Legend',
@@ -117,8 +93,8 @@ export const createBarTypeDefinition = (params: any) => ({
                 component: null,
                 props: {
                   options: [
-                    { name: 'Show', id: "show" },
-                    { name: 'Hidden', id: "hidden" },
+                    { name: 'Show', id: 'show' },
+                    { name: 'Hidden', id: 'hidden' },
                   ],
                   defaultSelections: [{ name: 'Show', id: ShowLegend }],
                 },
@@ -176,17 +152,16 @@ export const createBarTypeDefinition = (params: any) => ({
                 eleType: 'slider',
                 defaultState: 0,
                 props: {
-                  ticks:
-                    [
-                      { label: '-90°', value: -90 },
-                      { label: '-45°', value: -45 },
-                      { label: '0°', value: 0 },
-                      { label: '45°', value: 45 },
-                      { label: '90°', value: 90 },
-                    ],
+                  ticks: [
+                    { label: '-90°', value: -90 },
+                    { label: '-45°', value: -45 },
+                    { label: '0°', value: 0 },
+                    { label: '45°', value: 45 },
+                    { label: '90°', value: 90 },
+                  ],
                   showTicks: true,
                   min: -90,
-                  max: 90
+                  max: 90,
                 },
               },
               {

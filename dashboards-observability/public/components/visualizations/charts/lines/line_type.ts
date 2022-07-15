@@ -13,12 +13,12 @@ import {
   ConfigThresholds,
   ConfigLineChartStyles,
   ConfigLegend,
-  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { ConfigAvailability } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_availability';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
 import { ButtonGroupItem } from '../../../../../public/components/event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_button_group';
 import { SliderConfig } from '../../../../../public/components/event_analytics/explorer/visualizations/config_panel/config_panes/config_controls/config_style_slider';
+import { fetchConfigObject } from '../shared/helper';
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
 const { DefaultMode, Interpolation, LineWidth, FillOpacity, MarkerSize, LegendPosition, ShowLegend } = DefaultChartStyles;
@@ -77,39 +77,14 @@ export const createLineTypeDefinition = (params: any = {}) => ({
               },
             ],
           },
-          {
-            id: 'tooltip_options',
-            name: 'Tooltip options',
-            editor: ConfigTooltip,
-            mapTo: 'tooltipOptions',
-            schemas: [
-              {
-                name: 'Tooltip mode',
-                component: null,
-                mapTo: 'tooltipMode',
-                props: {
-                  options: [
-                    { name: 'Show', id: 'show' },
-                    { name: 'Hidden', id: 'hidden' },
-                  ],
-                  defaultSelections: [{ name: 'Show', id: 'show' }],
-                },
-              },
-              {
-                name: 'Tooltip text',
-                component: null,
-                mapTo: 'tooltipText',
-                props: {
-                  options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Dimension', id: 'x' },
-                    { name: 'Metrics', id: 'y' },
-                  ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
-                },
-              },
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Dimension', id: 'x' },
+              { name: 'Metrics', id: 'y' },
             ],
-          },
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'chart_styles',
             name: 'Chart styles',

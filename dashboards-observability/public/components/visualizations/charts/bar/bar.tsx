@@ -33,8 +33,8 @@ export const Bar = ({ visualizations, layout, config }: any) => {
   const { defaultAxes } = visualizations.data;
   const tickAngle = dataConfig?.chartStyles?.rotateBarLabels || vis.labelAngle
   const lineWidth = dataConfig?.chartStyles?.lineWidth || vis.lineWidth;
-  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
-  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
+  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode !== undefined ? dataConfig?.tooltipOptions?.tooltipMode : 'show';
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText !== undefined ? dataConfig?.tooltipOptions?.tooltipText : 'all';
   const fillOpacity = dataConfig?.chartStyles?.fillOpacity !== undefined ? dataConfig?.chartStyles?.fillOpacity / FILLOPACITY_DIV_FACTOR : vis.fillOpacity / FILLOPACITY_DIV_FACTOR;
   const barWidth = 1 - (dataConfig?.chartStyles?.barWidth || vis.barWidth);
   const groupWidth = 1 - (dataConfig?.chartStyles?.groupWidth || vis.groupWidth);

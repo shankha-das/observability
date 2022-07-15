@@ -14,9 +14,9 @@ import {
   ConfigChartOptions,
   ConfigLegend,
   InputFieldItem,
-  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { DEFAULT_PALETTE, PIE_PALETTES } from '../../../../../common/constants/colors';
+import { fetchConfigObject } from '../shared/helper';
 
 
 const sharedConfigs = getPlotlySharedConfigs();
@@ -84,40 +84,15 @@ export const createPieTypeDefinition = (params: any) => ({
               },
             ],
           },
-          {
-            id: 'tooltip_options',
-            name: 'Tooltip options',
-            editor: ConfigTooltip,
-            mapTo: 'tooltipOptions',
-            schemas: [
-              {
-                name: 'Tooltip mode',
-                component: null,
-                mapTo: 'tooltipMode',
-                props: {
-                  options: [
-                    { name: 'Show', id: 'show' },
-                    { name: 'Hidden', id: 'hidden' },
-                  ],
-                  defaultSelections: [{ name: 'Show', id: 'show' }],
-                },
-              },
-              {
-                name: 'Tooltip text',
-                component: null,
-                mapTo: 'tooltipText',
-                props: {
-                  options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Label', id: 'label' },
-                    { name: 'Value', id: 'value' },
-                    { name: 'Percent', id: 'percent' },
-                  ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
-                },
-              },
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Label', id: 'label' },
+              { name: 'Value', id: 'value' },
+              { name: 'Percent', id: 'percent' },
             ],
-          },
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'chart_styles',
             name: 'Chart Styles',

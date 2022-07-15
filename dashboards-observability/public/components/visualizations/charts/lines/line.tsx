@@ -28,8 +28,8 @@ export const Line = ({ visualizations, layout, config }: any) => {
   const dataConfigTab = visualizations.data?.rawVizData?.line?.dataConfig && visualizations.data.rawVizData.line.dataConfig;
   const xaxis = dataConfigTab?.dimensions ? dataConfigTab?.dimensions.filter((item)  => item.label) : [];
   const yaxis = dataConfigTab?.metrics ? dataConfigTab?.metrics.filter((item)  => item.label) : [];
-  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
-  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
+  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode !== undefined ? dataConfig?.tooltipOptions?.tooltipMode : 'show';
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText !== undefined ? dataConfig?.tooltipOptions?.tooltipText : 'all';
 
   const lastIndex = fields.length - 1;
 

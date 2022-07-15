@@ -37,8 +37,8 @@ export const TreeMap = ({ visualizations, layout, config }: any) => {
       ? visualizations.data?.rawVizData?.tree_map?.dataConfig?.dimensions[0].parentFields
       : [];
 
-  const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode;
-  const tooltipText = dataConfig?.tooltipOptions?.tooltipText;
+      const tooltipMode = dataConfig?.tooltipOptions?.tooltipMode !== undefined ? dataConfig?.tooltipOptions?.tooltipMode : 'show';
+  const tooltipText = dataConfig?.tooltipOptions?.tooltipText !== undefined ? dataConfig?.tooltipOptions?.tooltipText : 'all';
 
   const valueField =
     visualizations.data?.rawVizData?.tree_map?.dataConfig?.metrics &&

@@ -13,13 +13,13 @@ import {
   ConfigChartOptions,
   PanelItem,
   SingleColorPicker,
-  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import {
   COLOR_PALETTES,
   HEATMAP_SINGLE_COLOR,
   HEATMAP_PALETTE_COLOR,
 } from '../../../../../common/constants/colors';
+import { fetchConfigObject } from '../shared/helper';
 
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
@@ -44,40 +44,15 @@ export const createMapsVisDefinition = () => ({
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [
-          {
-            id: 'tooltip_options',
-            name: 'Tooltip options',
-            editor: ConfigTooltip,
-            mapTo: 'tooltipOptions',
-            schemas: [
-              {
-                name: 'Tooltip mode',
-                component: null,
-                mapTo: 'tooltipMode',
-                props: {
-                  options: [
-                    { name: 'Show', id: 'show' },
-                    { name: 'Hidden', id: 'hidden' },
-                  ],
-                  defaultSelections: [{ name: 'Show', id: 'show' }],
-                },
-              },
-              {
-                name: 'Tooltip text',
-                component: null,
-                mapTo: 'tooltipText',
-                props: {
-                  options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Dim 1', id: 'x' },
-                    { name: 'Dim 2', id: 'y' },
-                    { name: 'Metrics', id: 'z' },
-                  ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
-                },
-              },
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Dim 1', id: 'x' },
+              { name: 'Dim 2', id: 'y' },
+              { name: 'Metrics', id: 'z' },
             ],
-          },
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'chart_styles',
             name: 'Chart Styles',

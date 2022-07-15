@@ -12,10 +12,9 @@ import {
   ConfigLegend,
   SliderConfig,
   ConfigColorTheme,
-  ConfigThresholds,
-  ConfigTooltip,
 } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/config_controls';
 import { DefaultChartStyles } from '../../../../../common/constants/shared';
+import { fetchConfigObject } from '../shared/helper';
 
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
@@ -76,39 +75,14 @@ export const createHistogramVisDefinition = (params = {}) => ({
             mapTo: 'colorTheme',
             schemas: [],
           },
-          {
-            id: 'tooltip_options',
-            name: 'Tooltip options',
-            editor: ConfigTooltip,
-            mapTo: 'tooltipOptions',
-            schemas: [
-              {
-                name: 'Tooltip mode',
-                component: null,
-                mapTo: 'tooltipMode',
-                props: {
-                  options: [
-                    { name: 'Show', id: 'show' },
-                    { name: 'Hidden', id: 'hidden' },
-                  ],
-                  defaultSelections: [{ name: 'Show', id: 'show' }],
-                },
-              },
-              {
-                name: 'Tooltip text',
-                component: null,
-                mapTo: 'tooltipText',
-                props: {
-                  options: [
-                    { name: 'All', id: 'all' },
-                    { name: 'Dimension', id: 'x' },
-                    { name: 'Metrics', id: 'y' },
-                  ],
-                  defaultSelections: [{ name: 'All', id: 'all' }],
-                },
-              },
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Dimension', id: 'x' },
+              { name: 'Metrics', id: 'y' },
             ],
-          },
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'legend',
             name: 'Legend',
