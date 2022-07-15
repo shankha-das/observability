@@ -552,7 +552,7 @@ exports[`Treemap component Renders treemap component 1`] = `
     data={
       Array [
         Object {
-          "hoverinfo": undefined,
+          "hoverinfo": "all",
           "labels": Array [
             "error",
             "info",
@@ -615,7 +615,7 @@ exports[`Treemap component Renders treemap component 1`] = `
       data={
         Array [
           Object {
-            "hoverinfo": undefined,
+            "hoverinfo": "all",
             "labels": Array [
               "error",
               "info",
