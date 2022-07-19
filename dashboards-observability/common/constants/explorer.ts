@@ -119,7 +119,7 @@ export const AGGREGATION_OPTIONS = [
 ];
 
 // numeric fields type for metrics
-export const numericalTypes = ['float', 'double', 'bigint', 'long', 'octet', 'short', 'byte'];
+export const numericalTypes = ['float', 'double', 'bigint', 'long', 'octet', 'short', 'byte', 'integer'];
 // Data table constants
 export const GRID_HEADER_COLUMN_MAX_WIDTH = '150px';
 export const GRID_PAGE_RANGE_DISPLAY = 5;
@@ -132,3 +132,22 @@ export const ROW_DENSITIES = [
 ];
 
 export const HEADER_HEIGHT = 35;
+
+// gauge chart default parameters
+export interface DefaultGaugeChartParametersProps {
+  GaugeTitleSize: number,
+  DisplayDefaultGauges: number,
+  OrientationDefault: string,
+  TickLength: number, 
+  LegendPlacement: string,
+  ThresholdsMaxLimit: number
+};
+
+export const DefaultGaugeChartParameters: DefaultGaugeChartParametersProps = {
+  GaugeTitleSize: 14,
+  DisplayDefaultGauges: 1,
+  OrientationDefault: 'h',
+  TickLength: 5,
+  LegendPlacement: 'center',
+  ThresholdsMaxLimit: 1
+}

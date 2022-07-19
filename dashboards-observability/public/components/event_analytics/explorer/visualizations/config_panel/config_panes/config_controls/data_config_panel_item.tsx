@@ -90,7 +90,7 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       const { xaxis, yaxis } = data.defaultAxes;
       setConfigList({
         dimensions: [...(xaxis && xaxis)],
-        metrics: [...(yaxis && yaxis)],
+        metrics: [...(yaxis && yaxis.map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' })))],
       });
     } else if (visualizations.vis.name === visChartTypes.HeatMap) {
       setConfigList({
@@ -174,9 +174,7 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
   };
 
   const isPositionButtonVisible = (sectionName: string) =>
-    sectionName === 'metrics' &&
-    (visualizations.vis.name === visChartTypes.Line ||
-      visualizations.vis.name === visChartTypes.Bar);
+    sectionName === 'metrics' && visualizations.vis.name === visChartTypes.Line;
 
   const getOptionsAvailable = (sectionName: string) => {
     let selectedFields = {};
@@ -185,8 +183,10 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     }
     const unselectedFields = fieldOptionList.filter((field) => !selectedFields[field.label]);
     return sectionName === 'metrics'
-      ? unselectedFields.filter((field) => numericalTypes.includes(field.type))
-      : unselectedFields;
+      ? unselectedFields
+      : visualizations.vis.name === visChartTypes.Line
+        ? unselectedFields.filter((i) => i.type === 'timestamp')
+        : unselectedFields;
   };
 
   const getCommonUI = (lists, sectionName: string) =>
@@ -273,6 +273,7 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
                     iconType="plusInCircleFilled"
                     color="primary"
                     onClick={() => handleServiceAdd(sectionName)}
+                    disabled={sectionName === "dimensions" && visualizations.vis.name === visChartTypes.Line}
                   >
                     Add
                   </EuiButton>
@@ -292,7 +293,9 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
         fullWidth
         placeholder="auto"
         value={
-          configList?.dimensions && configList.dimensions[0][type]
+          configList?.dimensions &&
+            configList?.dimensions.length > 0 &&
+            configList.dimensions[0][type]
             ? configList.dimensions[0][type]
             : ''
         }
