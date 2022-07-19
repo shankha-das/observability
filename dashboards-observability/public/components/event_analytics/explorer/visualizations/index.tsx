@@ -5,18 +5,18 @@
 
 import './app.scss';
 
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import React, { useContext } from 'react';
 import { EuiResizableContainer } from '@elastic/eui';
-import { SELECTED_TIMESTAMP } from '../../../../../common/constants/explorer';
+import { RAW_QUERY, SELECTED_TIMESTAMP } from '../../../../../common/constants/explorer';
 import { IField, IQuery, IVisualizationContainerProps } from '../../../../../common/types/explorer';
 import { WorkspacePanel } from './workspace_panel';
 import { ConfigPanel } from './config_panel';
 import { Sidebar } from '../sidebar';
 import { DataConfigPanelItem } from './config_panel/config_panes/config_controls/data_config_panel_item';
 import { TabContext } from '../../hooks';
-import { visChartTypes } from '../../../../../common/constants/shared';
+import { PPL_STATS_REGEX, visChartTypes } from '../../../../../common/constants/shared';
 import { TreemapConfigPanelItem } from './config_panel/config_panes/config_controls/treemap_config_panel_item';
 interface IExplorerVisualizationsProps {
   query: IQuery;
@@ -69,7 +69,10 @@ export const ExplorerVisualizations = ({
                 handleOverrideTimestamp={handleOverrideTimestamp}
                 handleAddField={(field: IField) => handleAddField(field)}
                 handleRemoveField={(field: IField) => handleRemoveField(field)}
-                isFieldToggleButtonDisabled={true}
+                isFieldToggleButtonDisabled={
+                  isEmpty(explorerData.jsonData) ||
+                  !isEmpty(query[RAW_QUERY].match(PPL_STATS_REGEX))
+                }
               />
             </div>
           </EuiResizablePanel>

@@ -2,8 +2,14 @@
  * Copyright OpenSearch Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
-import { EuiAccordion, EuiPanel, EuiSpacer, htmlIdGenerator } from '@elastic/eui';
-import React, { useContext } from 'react';
+import {
+  EuiAccordion,
+  EuiPanel,
+  EuiSpacer,
+  EuiTablePagination,
+  htmlIdGenerator,
+} from '@elastic/eui';
+import React, { useContext, useEffect, useState } from 'react';
 import { TabContext } from '../../../event_analytics/hooks';
 import './logs_view.scss';
 
@@ -25,11 +31,37 @@ export const LogsView = ({ visualizations }: any) => {
       ? dataConfig?.chartStyles?.labelSize + 'px'
       : '14px';
   const rawData = explorerData.jsonData;
-  const { queriedFields = [], availableFields = [] } = visualizations?.data?.indexFields;
+  const {
+    queriedFields = [],
+    availableFields = [],
+    selectedFields = [],
+  } = visualizations?.data?.indexFields;
+
+  const selectedFieldsNames = selectedFields.map((field: any) => field.name);
+
+  const totalEntries = rawData.length;
+  const [activePage, setActivePage] = useState(0);
+  const [rowSize, setRowSize] = useState(20);
+  const [pageCount, setPageCount] = useState(Math.ceil(totalEntries / rowSize));
+
+  useEffect(() => {
+    setPageCount(Math.ceil(totalEntries / rowSize));
+  }, [totalEntries, rowSize]);
+
+  const goToPage = (pageNumber: number) => setActivePage(pageNumber);
+  const changeItemsPerPage = (pageSize: number) => {
+    setPageCount(Math.ceil(totalEntries / pageSize));
+    setRowSize(pageSize);
+    setActivePage(0);
+  };
 
   const isTimestamp = (key: any) => {
     if (queriedFields.length !== 0) {
       for (const { name, type } of queriedFields) {
+        if (name === key && type === 'timestamp') return true;
+      }
+    } else if (selectedFields.length !== 0) {
+      for (const { name, type } of selectedFields) {
         if (name === key && type === 'timestamp') return true;
       }
     } else {
@@ -53,15 +85,25 @@ export const LogsView = ({ visualizations }: any) => {
 
   const logs =
     rawData &&
-    rawData.map((log, index) => {
+    rawData.slice(activePage * rowSize, activePage * rowSize + rowSize).map((log, index) => {
       let btnContent: JSX.Element;
+      let updatedLog: any = {};
+      if (selectedFieldsNames.length > 0) {
+        for (const [key, val] of Object.entries(log)) {
+          if (selectedFieldsNames.includes(key)) {
+            updatedLog[key] = val;
+          }
+        }
+      } else {
+        updatedLog = { ...log };
+      }
       if (isWrapLinesEnabled) {
-        const column1 = Object.keys(log).reduce((val, key) => {
-          if (isTimestamp(key)) return `${log[key]}  `;
+        const column1 = Object.keys(updatedLog).reduce((val, key) => {
+          if (isTimestamp(key)) return `${updatedLog[key]}  `;
           return val;
         }, '');
         let column2 = '';
-        for (const [key, val] of Object.entries(log)) {
+        for (const [key, val] of Object.entries(updatedLog)) {
           if (!isTimestamp(key)) column2 += `${key}="${val}"  `;
         }
         const jsxContent = column2
@@ -83,16 +125,20 @@ export const LogsView = ({ visualizations }: any) => {
         );
       } else if (isPrettifyJSONEnabled) {
         let columnContent;
-        let { timestamp } = log;
-        if (timestamp === undefined) timestamp = fetchTimestamp(log);
+        let { timestamp } = updatedLog;
+        if (timestamp === undefined) timestamp = fetchTimestamp(updatedLog);
 
         let newLog: any = {};
-        for (const key of Object.keys(log)) {
-          if (key !== timestamp) newLog[key] = log[key];
+        for (const key of Object.keys(updatedLog)) {
+          if (key !== timestamp) newLog[key] = updatedLog[key];
         }
 
         if (isTimeEnabled && timestamp !== null) {
-          columnContent = JSON.stringify({ timestamp: log[timestamp], ...newLog }, null, '\t');
+          columnContent = JSON.stringify(
+            { timestamp: updatedLog[timestamp], ...newLog },
+            null,
+            '\t'
+          );
         } else {
           columnContent = JSON.stringify(newLog, null, '\t');
         }
@@ -109,15 +155,15 @@ export const LogsView = ({ visualizations }: any) => {
       } else {
         let stringContent = '';
         if (isTimeEnabled) {
-          stringContent += Object.keys(log).reduce((val, key) => {
+          stringContent += Object.keys(updatedLog).reduce((val, key) => {
             if (isTimestamp(key))
-              return log[key].indexOf('.') !== -1
-                ? log[key].substring(0, log[key].indexOf('.')) + '  '
-                : log[key] + '  ';
+              return updatedLog[key].indexOf('.') !== -1
+                ? updatedLog[key].substring(0, updatedLog[key].indexOf('.')) + '  '
+                : updatedLog[key] + '  ';
             return val;
           }, '');
         }
-        for (const [key, val] of Object.entries(log)) {
+        for (const [key, val] of Object.entries(updatedLog)) {
           if (isTimestamp(key)) continue;
           stringContent += `${key}="${val}"  `;
         }
@@ -167,5 +213,18 @@ export const LogsView = ({ visualizations }: any) => {
       }
     });
 
-  return <div style={{ fontSize: labelSize }}>{logs}</div>;
+  return (
+    <div style={{ fontSize: labelSize }}>
+      {logs}
+      <EuiTablePagination
+        aria-label="Logs View Pagination"
+        pageCount={pageCount}
+        activePage={activePage}
+        onChangePage={goToPage}
+        itemsPerPage={rowSize}
+        onChangeItemsPerPage={changeItemsPerPage}
+        itemsPerPageOptions={[10, 20]}
+      />
+    </div>
+  );
 };
