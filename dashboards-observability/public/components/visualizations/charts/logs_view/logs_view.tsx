@@ -9,7 +9,8 @@ import {
   EuiTablePagination,
   htmlIdGenerator,
 } from '@elastic/eui';
-import React, { useContext, useEffect, useState } from 'react';
+import { ROWS_PER_PAGE } from '../../../../../common/constants/shared';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TabContext } from '../../../event_analytics/hooks';
 import './logs_view.scss';
 
@@ -83,135 +84,147 @@ export const LogsView = ({ visualizations }: any) => {
     return null;
   };
 
-  const logs =
-    rawData &&
-    rawData.slice(activePage * rowSize, activePage * rowSize + rowSize).map((log, index) => {
-      let btnContent: JSX.Element;
-      let updatedLog: any = {};
-      if (selectedFieldsNames.length > 0) {
-        for (const [key, val] of Object.entries(log)) {
-          if (selectedFieldsNames.includes(key)) {
-            updatedLog[key] = val;
+  const logs = useMemo(() => {
+    return (
+      rawData &&
+      rawData.slice(activePage * rowSize, activePage * rowSize + rowSize).map((log, index) => {
+        let btnContent: JSX.Element;
+        let updatedLog: any = {};
+        if (selectedFieldsNames.length > 0) {
+          for (const [key, val] of Object.entries(log)) {
+            if (selectedFieldsNames.includes(key)) {
+              updatedLog[key] = val;
+            }
           }
-        }
-      } else {
-        updatedLog = { ...log };
-      }
-      if (isWrapLinesEnabled) {
-        const column1 = Object.keys(updatedLog).reduce((val, key) => {
-          if (isTimestamp(key)) return `${updatedLog[key]}  `;
-          return val;
-        }, '');
-        let column2 = '';
-        for (const [key, val] of Object.entries(updatedLog)) {
-          if (!isTimestamp(key)) column2 += `${key}="${val}"  `;
-        }
-        const jsxContent = column2
-          .split('  ')
-          .map((ele) => <span className="columnData">{ele}</span>);
-        btnContent = (
-          <table className="tableContainer">
-            <tr>
-              {isTimeEnabled && column1 !== '' && (
-                <td className="timeColumn">
-                  {column1.indexOf('.') !== -1
-                    ? column1.substring(0, column1.indexOf('.'))
-                    : column1}
-                </td>
-              )}
-              <td className="wrapContent">{jsxContent}</td>
-            </tr>
-          </table>
-        );
-      } else if (isPrettifyJSONEnabled) {
-        let columnContent;
-        let { timestamp } = updatedLog;
-        if (timestamp === undefined) timestamp = fetchTimestamp(updatedLog);
-
-        let newLog: any = {};
-        for (const key of Object.keys(updatedLog)) {
-          if (key !== timestamp) newLog[key] = updatedLog[key];
-        }
-
-        if (isTimeEnabled && timestamp !== null) {
-          columnContent = JSON.stringify(
-            { timestamp: updatedLog[timestamp], ...newLog },
-            null,
-            '\t'
-          );
         } else {
-          columnContent = JSON.stringify(newLog, null, '\t');
+          updatedLog = { ...log };
         }
-
-        btnContent = (
-          <table className="tableContainer">
-            <tr>
-              <td>
-                <pre>{columnContent}</pre>
-              </td>
-            </tr>
-          </table>
-        );
-      } else {
-        let stringContent = '';
-        if (isTimeEnabled) {
-          stringContent += Object.keys(updatedLog).reduce((val, key) => {
-            if (isTimestamp(key))
-              return updatedLog[key].indexOf('.') !== -1
-                ? updatedLog[key].substring(0, updatedLog[key].indexOf('.')) + '  '
-                : updatedLog[key] + '  ';
+        if (isWrapLinesEnabled) {
+          const column1 = Object.keys(updatedLog).reduce((val, key) => {
+            if (isTimestamp(key)) return `${updatedLog[key]}  `;
             return val;
           }, '');
+          let column2 = '';
+          for (const [key, val] of Object.entries(updatedLog)) {
+            if (!isTimestamp(key)) column2 += `${key}="${val}"  `;
+          }
+          const jsxContent = column2
+            .split('  ')
+            .map((ele) => <span className="columnData">{ele}</span>);
+          btnContent = (
+            <table className="tableContainer">
+              <tr>
+                {isTimeEnabled && column1 !== '' && (
+                  <td className="timeColumn">
+                    {column1.indexOf('.') !== -1
+                      ? column1.substring(0, column1.indexOf('.'))
+                      : column1}
+                  </td>
+                )}
+                <td className="wrapContent">{jsxContent}</td>
+              </tr>
+            </table>
+          );
+        } else if (isPrettifyJSONEnabled) {
+          let columnContent;
+          let { timestamp } = updatedLog;
+          if (timestamp === undefined) timestamp = fetchTimestamp(updatedLog);
+
+          let newLog: any = {};
+          for (const key of Object.keys(updatedLog)) {
+            if (key !== timestamp) newLog[key] = updatedLog[key];
+          }
+
+          if (isTimeEnabled && timestamp !== null) {
+            columnContent = JSON.stringify(
+              { timestamp: updatedLog[timestamp], ...newLog },
+              null,
+              '\t'
+            );
+          } else {
+            columnContent = JSON.stringify(newLog, null, '\t');
+          }
+
+          btnContent = (
+            <table className="tableContainer">
+              <tr>
+                <td>
+                  <pre>{columnContent}</pre>
+                </td>
+              </tr>
+            </table>
+          );
+        } else {
+          let stringContent = '';
+          if (isTimeEnabled) {
+            stringContent += Object.keys(updatedLog).reduce((val, key) => {
+              if (isTimestamp(key))
+                return updatedLog[key].indexOf('.') !== -1
+                  ? updatedLog[key].substring(0, updatedLog[key].indexOf('.')) + '  '
+                  : updatedLog[key] + '  ';
+              return val;
+            }, '');
+          }
+          for (const [key, val] of Object.entries(updatedLog)) {
+            if (isTimestamp(key)) continue;
+            stringContent += `${key}="${val}"  `;
+          }
+          const jsxContent = stringContent
+            .split('  ')
+            .map((ele) => <span className="columnData">{ele}</span>);
+          btnContent = (
+            <table>
+              <tr>
+                <td className="noWrapContent">{jsxContent}</td>
+              </tr>
+            </table>
+          );
         }
-        for (const [key, val] of Object.entries(updatedLog)) {
-          if (isTimestamp(key)) continue;
-          stringContent += `${key}="${val}"  `;
-        }
-        const jsxContent = stringContent
-          .split('  ')
-          .map((ele) => <span className="columnData">{ele}</span>);
-        btnContent = (
-          <table>
-            <tr>
-              <td className="noWrapContent">{jsxContent}</td>
-            </tr>
-          </table>
-        );
-      }
-      if (isLogDetailsEnabled) {
-        return (
-          <>
-            <EuiAccordion
-              key={index}
-              id={htmlIdGenerator('multipleAccordionsId__1')()}
-              buttonContent={btnContent}
-              paddingSize="l"
-            >
-              <EuiPanel color="subdued" className="lvEuiAccordian_Panel">
-                <table>
-                  <tr>
-                    <th>Detected fields</th>
-                  </tr>
-                  {Object.entries(log).map(([key, value], index) => (
-                    <tr key={index}>
-                      <td>
-                        <p>{key}</p>
-                      </td>
-                      <td>
-                        <p>{value}</p>
-                      </td>
+        if (isLogDetailsEnabled) {
+          return (
+            <>
+              <EuiAccordion
+                key={index}
+                id={htmlIdGenerator('multipleAccordionsId__1')()}
+                buttonContent={btnContent}
+                paddingSize="l"
+              >
+                <EuiPanel color="subdued" className="lvEuiAccordian_Panel">
+                  <table>
+                    <tr>
+                      <th>Detected fields</th>
                     </tr>
-                  ))}
-                </table>
-              </EuiPanel>
-            </EuiAccordion>
-            <EuiSpacer />
-          </>
-        );
-      } else {
-        return <div className="rawlogData">{btnContent}</div>;
-      }
-    });
+                    {Object.entries(log).map(([key, value], index) => (
+                      <tr key={index}>
+                        <td>
+                          <p>{key}</p>
+                        </td>
+                        <td>
+                          <p>{value}</p>
+                        </td>
+                      </tr>
+                    ))}
+                  </table>
+                </EuiPanel>
+              </EuiAccordion>
+              <EuiSpacer />
+            </>
+          );
+        } else {
+          return <div className="rawlogData">{btnContent}</div>;
+        }
+      })
+    );
+  }, [
+    rawData,
+    activePage,
+    rowSize,
+    selectedFieldsNames,
+    isWrapLinesEnabled,
+    isPrettifyJSONEnabled,
+    isTimeEnabled,
+    isLogDetailsEnabled,
+  ]);
 
   return (
     <div style={{ fontSize: labelSize }}>
@@ -223,7 +236,7 @@ export const LogsView = ({ visualizations }: any) => {
         onChangePage={goToPage}
         itemsPerPage={rowSize}
         onChangeItemsPerPage={changeItemsPerPage}
-        itemsPerPageOptions={[10, 20]}
+        itemsPerPageOptions={ROWS_PER_PAGE}
       />
     </div>
   );

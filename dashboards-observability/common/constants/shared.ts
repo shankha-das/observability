@@ -174,5 +174,7 @@ export const DefaultChartStyles: DefaultChartStylesProps = {
   DefaultSortSectors: 'largest_to_smallest',
 }
 
-export const FILLOPACITY_DIV_FACTOR = 200; 
+export const FILLOPACITY_DIV_FACTOR = 200;
+
+export const ROWS_PER_PAGE = [10, 20];
 
