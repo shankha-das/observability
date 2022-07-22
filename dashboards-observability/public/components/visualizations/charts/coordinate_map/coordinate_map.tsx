@@ -3,30 +3,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, { useContext, useMemo } from 'react';
+
 import { Plt } from '../../plotly/plot';
 import { TabContext } from '../../../event_analytics/hooks';
+import { EmptyPlaceholder } from '../../../event_analytics/explorer/visualizations/shared_components/empty_placeholder';
 
 export const CoordinateMap = ({ visualizations, layout, config }: any) => {
   const { explorerData } = useContext<any>(TabContext);
   const { dataConfig = {}, layoutConfig = {} } = visualizations?.data?.userConfigs;
+  const dataConfiguration = visualizations?.data?.rawVizData?.coordinate_map?.dataConfig;
+  const rawData = explorerData.jsonData;
 
-  const rawData = useCallback(explorerData.jsonData, [explorerData]);
-  const destLocationNames = useCallback(
-    rawData.map((data: any) => data.DestCityName),
-    [rawData]
+  if (dataConfiguration === undefined || rawData.length === 0) {
+    return <EmptyPlaceholder icon={visualizations?.vis?.iconType} />;
+  }
+  const plotNames = rawData.map((data: any) => data?.[dataConfiguration?.metrics[0]?.plotName]);
+  const locationLats = rawData.map(
+    (data: any) => JSON.parse(data?.[dataConfiguration?.dimensions[0]?.name])?.lat
   );
-  const destLocationLats = useCallback(
-    rawData.map((data: any) => JSON.parse(data?.DestLocation)?.lat),
-    [rawData]
+  const locationLons = rawData.map(
+    (data: any) => JSON.parse(data?.[dataConfiguration?.dimensions[0]?.name])?.lon
   );
-  const destLocationLons = useCallback(
-    rawData.map((data: any) => JSON.parse(data?.DestLocation)?.lon),
-    [rawData]
-  );
-  const avgTicketPrices = useCallback(
-    rawData.map((data: any) => data.AvgTicketPrice),
-    [rawData]
+  const colorDetectorField = rawData.map(
+    (data: any) => data?.[dataConfiguration?.metrics[0]?.name]
   );
 
   const showText =
@@ -60,9 +60,9 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
       {
         type: 'scattergeo',
         mode: `markers${showText ? '+text' : ''}`,
-        text: destLocationNames,
-        lon: destLocationLons,
-        lat: destLocationLats,
+        text: plotNames,
+        lon: locationLons,
+        lat: locationLats,
         marker: {
           size: 10,
           line: { width: 1 },
@@ -70,24 +70,16 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
           autocolorscale: false,
           colorscale: scl,
           cmin: 0,
-          color: avgTicketPrices,
+          color: colorDetectorField,
           colorbar: {
-            title: 'Flight Ticket Prices',
+            title: 'Range',
           },
         },
         name: 'Coordinate Map',
         textposition: textPosition,
       },
     ],
-    [
-      destLocationNames,
-      destLocationLons,
-      destLocationLats,
-      avgTicketPrices,
-      scl,
-      showText,
-      textPosition,
-    ]
+    [plotNames, locationLons, locationLats, colorDetectorField, scl, showText, textPosition]
   );
 
   const layoutMap = {

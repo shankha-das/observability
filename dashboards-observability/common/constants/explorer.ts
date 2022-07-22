@@ -118,6 +118,30 @@ export const AGGREGATION_OPTIONS = [
   },
 ];
 
+export const METRIC_AGGREGATIONS = [
+  {
+    label: 'COUNT',
+  },
+  {
+    label: 'SUM',
+  },
+  {
+    label: 'AVERAGE',
+  },
+  {
+    label: 'MAX',
+  },
+  {
+    label: 'MIN',
+  },
+  {
+    label: 'TOP HIT',
+  },
+  {
+    label: 'UNIQUE COUNT',
+  },
+];
+
 // numeric fields type for metrics
 export const numericalTypes = ['float', 'double', 'bigint', 'long', 'octet', 'short', 'byte', 'integer'];
 // Data table constants

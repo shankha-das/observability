@@ -25,6 +25,7 @@ import {
 } from '../../../../../../event_analytics/redux/slices/visualization_slice';
 import {
   AGGREGATION_OPTIONS,
+  METRIC_AGGREGATIONS,
   numericalTypes,
 } from '../../../../../../../../common/constants/explorer';
 import { ButtonGroupItem } from './config_button_group';
@@ -51,28 +52,28 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
 
   const [configList, setConfigList] = useState<ConfigList>({});
 
-  useEffect(() => {
-    if (
-      configList.dimensions &&
-      configList.metrics &&
-      visualizations.data?.rawVizData?.[visualizations.vis.name] === undefined
-    ) {
-      dispatch(
-        renderExplorerVis({
-          tabId,
-          data: {
-            ...explorerVisualizations,
-            [visualizations.vis.name]: {
-              dataConfig: {
-                metrics: configList.metrics,
-                dimensions: configList.dimensions,
-              },
-            },
-          },
-        })
-      );
-    }
-  }, [configList]);
+  // useEffect(() => {
+  //   if (
+  //     configList.dimensions &&
+  //     configList.metrics &&
+  //     visualizations.data?.rawVizData?.[visualizations.vis.name] === undefined
+  //   ) {
+  //     dispatch(
+  //       renderExplorerVis({
+  //         tabId,
+  //         data: {
+  //           ...explorerVisualizations,
+  //           [visualizations.vis.name]: {
+  //             dataConfig: {
+  //               metrics: configList.metrics,
+  //               dimensions: configList.dimensions,
+  //             },
+  //           },
+  //         },
+  //       })
+  //     );
+  //   }
+  // }, [configList]);
 
   useEffect(() => {
     if (
@@ -144,6 +145,26 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     setConfigList(updatedList);
   };
 
+  const updateCoordinateConfig = (
+    value: string,
+    type: string,
+    field: string,
+    dataType?: string
+  ) => {
+    const list = { ...configList };
+    let listItem = { ...list[type][0] };
+    listItem[field] = value;
+    if (field === 'label') {
+      listItem.name = value;
+      listItem.type = dataType !== undefined ? dataType : '';
+    }
+    const updatedList = {
+      ...list,
+      [type]: [listItem],
+    };
+    setConfigList(updatedList);
+  };
+
   const handleServiceRemove = (index: number, name: string) => {
     const list = { ...configList };
     const arr = [...list[name]];
@@ -189,6 +210,25 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       : visualizations.vis.name === visChartTypes.Line
       ? unselectedFields.filter((i) => i.type === 'timestamp')
       : unselectedFields;
+  };
+
+  const getOptionsAccordingToType = (dataType: string) => {
+    if (dataType === 'all') {
+      return data.indexFields.availableFields.map((field: any) => ({
+        label: field.name,
+      }));
+    }
+    if (dataType === 'number') {
+      return data.indexFields.availableFields
+        .filter((field: any) => field.type === 'float' || field.type === 'integer')
+        .map((filteredField: any) => ({ label: filteredField.name }));
+    }
+    if (dataType === 'geo_point') {
+      return data.indexFields.availableFields
+        .filter((field: any) => field.type === dataType)
+        .map((filteredField: any) => ({ label: filteredField.name }));
+    }
+    return [];
   };
 
   const getCommonUI = (lists, sectionName: string) =>
@@ -311,6 +351,59 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
     </>
   );
 
+  const getSingleBlock = (type: string, dataType: string) => {
+    return (
+      <EuiPanel color="subdued" style={{ padding: '0px' }}>
+        <EuiFormRow label="Aggregation">
+          <EuiComboBox
+            aria-label="Accessible screen reader label"
+            placeholder="Select a aggregation"
+            singleSelection={{ asPlainText: true }}
+            options={type === 'metrics' ? METRIC_AGGREGATIONS : [{ label: 'GEOHASH' }]}
+            selectedOptions={
+              configList[type] && configList[type].length > 0 && configList[type][0]['aggregation']
+                ? [{ label: configList[type][0]['aggregation'] }]
+                : []
+            }
+            onChange={(e) =>
+              updateCoordinateConfig(e.length > 0 ? e[0].label : '', type, 'aggregation')
+            }
+          />
+        </EuiFormRow>
+        <EuiFormRow label="Field">
+          <EuiComboBox
+            aria-label="Accessible screen reader label"
+            placeholder="Select a field"
+            singleSelection={{ asPlainText: true }}
+            options={getOptionsAccordingToType(dataType)}
+            selectedOptions={
+              configList[type] && configList[type].length > 0 && configList[type][0]['label']
+                ? [{ label: configList[type][0]['label'] }]
+                : []
+            }
+            onChange={(e) =>
+              updateCoordinateConfig(e.length > 0 ? e[0].label : '', type, 'label', dataType)
+            }
+          />
+        </EuiFormRow>
+
+        <EuiFormRow label="Custom label">
+          <EuiFieldText
+            placeholder="Custom label"
+            value={
+              configList[type] && configList[type].length > 0 && configList[type][0]['custom_label']
+                ? configList[type][0]['custom_label']
+                : ''
+            }
+            onChange={(e) => updateCoordinateConfig(e.target.value, type, 'custom_label')}
+            aria-label="Use aria labels when no actual label is in use"
+          />
+        </EuiFormRow>
+        <EuiSpacer size="s" />
+      </EuiPanel>
+    );
+  };
+
   return (
     <>
       <EuiTitle size="xxs">
@@ -346,13 +439,46 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
           {getNumberField('bucketOffset')}
         </>
       )}
+      {visualizations.vis.name === visChartTypes.CoordinateMap && (
+        <>
+          <EuiTitle size="xxs">
+            <h3>Mertics</h3>
+          </EuiTitle>
+          {getSingleBlock('metrics', 'number')}
+          <EuiFormRow label="Plot Label">
+            <EuiComboBox
+              aria-label="Accessible screen reader label"
+              placeholder="Select a field"
+              singleSelection={{ asPlainText: true }}
+              options={getOptionsAccordingToType('all')}
+              selectedOptions={
+                configList['metrics'] &&
+                configList['metrics'].length > 0 &&
+                configList['metrics'][0]['plotName']
+                  ? [{ label: configList['metrics'][0]['plotName'] }]
+                  : []
+              }
+              onChange={(e) =>
+                updateCoordinateConfig(e.length > 0 ? e[0].label : '', 'metrics', 'plotName')
+              }
+            />
+          </EuiFormRow>
+          <EuiSpacer size="s" />
+          <EuiTitle size="xxs">
+            <h3>Dimensions</h3>
+          </EuiTitle>
+          {getSingleBlock('dimensions', 'geo_point')}
+
+          <EuiSpacer size="s" />
+        </>
+      )}
       <EuiFlexItem grow={false}>
         <EuiButton
           data-test-subj="visualizeEditorRenderButton"
           iconType="play"
           onClick={() => updateChart()}
           size="s"
-          disabled
+          disabled={visualizations.vis.name !== visChartTypes.CoordinateMap}
         >
           Update chart
         </EuiButton>
