@@ -43,6 +43,14 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
     dataConfig?.chartStyles?.longitudeRange !== undefined
       ? dataConfig?.chartStyles?.longitudeRange
       : [-130, -55];
+  const tooltipMode =
+    dataConfig?.tooltipOptions?.tooltipMode !== undefined
+      ? dataConfig?.tooltipOptions?.tooltipMode
+      : 'show';
+  const tooltipText =
+    dataConfig?.tooltipOptions?.tooltipText !== undefined
+      ? dataConfig?.tooltipOptions?.tooltipText
+      : 'all';
   const scl = useMemo(
     () => [
       [0, 'rgb(5, 10, 172)'],
@@ -75,8 +83,23 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
             title: 'Range',
           },
         },
+        locationmode: 'country names',
         name: 'Coordinate Map',
         textposition: textPosition,
+        hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
+        hovertemplate:
+          tooltipMode === 'hidden' || tooltipText !== 'all'
+            ? ''
+            : '<b>Latitude: </b> %{lat} <br><b>Longitude: </b> %{lon} <br><extra>%{text}</extra>',
+        hoverlabel: {
+          align: 'auto',
+          bgcolor: 'white',
+          bordercolor: 'black',
+          font: {
+            color: 'black',
+            size: 18,
+          },
+        },
       },
     ],
     [plotNames, locationLons, locationLats, colorDetectorField, scl, showText, textPosition]
