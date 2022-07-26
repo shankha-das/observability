@@ -15,9 +15,25 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
   const dataConfiguration = visualizations?.data?.rawVizData?.coordinate_map?.dataConfig;
   const rawData = explorerData.jsonData;
 
-  if (dataConfiguration === undefined || rawData.length === 0) {
+  if (
+    dataConfiguration === undefined ||
+    dataConfiguration.metrics === undefined ||
+    dataConfiguration.dimensions === undefined ||
+    dataConfiguration.metrics.length === 0 ||
+    dataConfiguration.metrics[0].plotName === undefined ||
+    dataConfiguration.metrics[0].plotName === '' ||
+    dataConfiguration.metrics[0].name === undefined ||
+    dataConfiguration.metrics[0].name === '' ||
+    dataConfiguration.dimensions.length === 0 ||
+    dataConfiguration.dimensions[0].type === undefined ||
+    dataConfiguration.dimensions[0].type !== 'geo_point' ||
+    dataConfiguration.dimensions[0].name === undefined ||
+    dataConfiguration.dimensions[0].name === '' ||
+    rawData.length === 0
+  ) {
     return <EmptyPlaceholder icon={visualizations?.vis?.iconType} />;
   }
+
   const plotNames = rawData.map((data: any) => data?.[dataConfiguration?.metrics[0]?.plotName]);
   const locationLats = rawData.map(
     (data: any) => JSON.parse(data?.[dataConfiguration?.dimensions[0]?.name])?.lat
@@ -28,6 +44,15 @@ export const CoordinateMap = ({ visualizations, layout, config }: any) => {
   const colorDetectorField = rawData.map(
     (data: any) => data?.[dataConfiguration?.metrics[0]?.name]
   );
+
+  if (
+    plotNames[0] === undefined ||
+    locationLats[0] === undefined ||
+    locationLons[0] === undefined ||
+    colorDetectorField[0] === undefined
+  ) {
+    return <EmptyPlaceholder icon={visualizations?.vis?.iconType} />;
+  }
 
   const showText =
     dataConfig?.text?.showText !== undefined ? dataConfig?.text?.showText === 'show' : true;
