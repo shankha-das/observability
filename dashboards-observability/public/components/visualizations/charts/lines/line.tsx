@@ -12,19 +12,21 @@ import {
   DefaultChartStyles,
   FILLOPACITY_DIV_FACTOR,
   PLOTLY_COLOR,
+  visChartTypes,
 } from '../../../../../common/constants/shared';
 import { hexToRgb } from '../../../../components/event_analytics/utils/utils';
 import { EmptyPlaceholder } from '../../../event_analytics/explorer/visualizations/shared_components/empty_placeholder';
 
 export const Line = ({ visualizations, layout, config }: any) => {
   const {
-    DefaultMode,
+    DefaultModeLine,
     Interpolation,
     LineWidth,
     FillOpacity,
     MarkerSize,
     LegendPosition,
     ShowLegend,
+    DefaultModeScatter,
     LabelAngle,
   } = DefaultChartStyles;
   const {
@@ -38,9 +40,10 @@ export const Line = ({ visualizations, layout, config }: any) => {
     availabilityConfig = {},
   } = visualizations?.data?.userConfigs;
 
+  let visType: string = visualizations.vis.name;
   const dataConfigTab =
-    visualizations.data?.rawVizData?.line?.dataConfig &&
-    visualizations.data.rawVizData.line.dataConfig;
+    visualizations.data?.rawVizData?.[visType]?.dataConfig &&
+    visualizations.data.rawVizData[visType].dataConfig;
   const xaxis = dataConfigTab?.dimensions
     ? dataConfigTab?.dimensions.filter((item) => item.label)
     : [];
@@ -56,7 +59,9 @@ export const Line = ({ visualizations, layout, config }: any) => {
 
   const lastIndex = fields.length - 1;
 
-  const mode = dataConfig?.chartStyles?.style || DefaultMode;
+  const mode =
+    dataConfig?.chartStyles?.style ||
+    (visType === visChartTypes.Line ? DefaultModeLine : DefaultModeScatter);
   const lineShape = dataConfig?.chartStyles?.interpolation || Interpolation;
   const lineWidth = dataConfig?.chartStyles?.lineWidth || LineWidth;
   const showLegend = !(
