@@ -9,7 +9,6 @@ import { LensIconChartPie } from '../../assets/chart_pie';
 import { VizDataPanel } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/default_vis_editor';
 import { ConfigEditor } from '../../../event_analytics/explorer/visualizations/config_panel/config_panes/json_editor';
 import {
-  ConfigValueOptions,
   HeatmapColorPalettePicker,
   ConfigChartOptions,
   PanelItem,
@@ -21,6 +20,7 @@ import {
   HEATMAP_SINGLE_COLOR,
   HEATMAP_PALETTE_COLOR,
 } from '../../../../../common/constants/colors';
+import { fetchConfigObject } from '../../../../components/event_analytics/utils/utils';
 
 const sharedConfigs = getPlotlySharedConfigs();
 const VIS_CATEGORY = getPlotlyCategory();
@@ -45,6 +45,15 @@ export const createMapsVisDefinition = () => ({
         mapTo: 'dataConfig',
         editor: VizDataPanel,
         sections: [
+          fetchConfigObject('Tooltip', {
+            options: [
+              { name: 'All', id: 'all' },
+              { name: 'Dim 1', id: 'x' },
+              { name: 'Dim 2', id: 'y' },
+              { name: 'Metrics', id: 'z' },
+            ],
+            defaultSelections: [{ name: 'All', id: 'all' }],
+          }),
           {
             id: 'legend',
             name: 'Legend',

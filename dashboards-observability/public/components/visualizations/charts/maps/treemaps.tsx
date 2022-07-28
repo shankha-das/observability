@@ -36,6 +36,14 @@ export const TreeMap = ({ visualizations, layout, config }: any) => {
     visualizations.data?.rawVizData?.tree_map?.dataConfig.dimensions[0].parentFields
       ? visualizations.data?.rawVizData?.tree_map?.dataConfig?.dimensions[0].parentFields
       : [];
+  const tooltipMode =
+    dataConfig?.tooltipOptions?.tooltipMode !== undefined
+      ? dataConfig.tooltipOptions.tooltipMode
+      : 'show';
+  const tooltipText =
+    dataConfig?.tooltipOptions?.tooltipText !== undefined
+      ? dataConfig?.tooltipOptions?.tooltipText
+      : 'all';
 
   const valueField =
     visualizations.data?.rawVizData?.tree_map?.dataConfig?.metrics &&
@@ -107,7 +115,9 @@ export const TreeMap = ({ visualizations, layout, config }: any) => {
             const currentParentIndices = uniqueParents.map((parent) =>
               data[field.name].findIndex((index) => index === parent)
             );
-            const lastParents = currentParentIndices.map((index) => data[lastParentField.name][index]);
+            const lastParents = currentParentIndices.map(
+              (index) => data[lastParentField.name][index]
+            );
             parentsArray = [...parentsArray, ...lastParents];
             valuesArray = [...valuesArray, ...Array(lastParents.length).fill(0)];
             colorsArray =
@@ -165,6 +175,7 @@ export const TreeMap = ({ visualizations, layout, config }: any) => {
         labels: labelsArray,
         parents: parentsArray,
         values: valuesArray,
+        hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
         textinfo: 'label+value+percent parent+percent entry',
         tiling: {
           packing: tilingAlgorithm.value,

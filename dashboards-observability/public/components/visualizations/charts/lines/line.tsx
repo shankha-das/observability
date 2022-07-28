@@ -41,8 +41,18 @@ export const Line = ({ visualizations, layout, config }: any) => {
   const dataConfigTab =
     visualizations.data?.rawVizData?.line?.dataConfig &&
     visualizations.data.rawVizData.line.dataConfig;
-  const xaxis = dataConfigTab?.dimensions ? dataConfigTab?.dimensions.filter((item) => item.label) : [];
+  const xaxis = dataConfigTab?.dimensions
+    ? dataConfigTab?.dimensions.filter((item) => item.label)
+    : [];
   const yaxis = dataConfigTab?.metrics ? dataConfigTab?.metrics.filter((item) => item.label) : [];
+  const tooltipMode =
+    dataConfig?.tooltipOptions?.tooltipMode !== undefined
+      ? dataConfig.tooltipOptions.tooltipMode
+      : 'show';
+  const tooltipText =
+    dataConfig?.tooltipOptions?.tooltipText !== undefined
+      ? dataConfig.tooltipOptions.tooltipText
+      : 'all';
 
   const lastIndex = fields.length - 1;
 
@@ -75,8 +85,9 @@ export const Line = ({ visualizations, layout, config }: any) => {
   if (!isEmpty(xaxis) && !isEmpty(yaxis)) {
     valueSeries = [...yaxis];
   } else {
-    valueSeries = (defaultAxes.yaxis || take(fields, lastIndex > 0 ? lastIndex : 1))
-      .map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' }));
+    valueSeries = (
+      defaultAxes.yaxis || take(fields, lastIndex > 0 ? lastIndex : 1)
+    ).map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' }));
   }
 
   const isDimensionTimestamp = isEmpty(xaxis)
@@ -130,6 +141,7 @@ export const Line = ({ visualizations, layout, config }: any) => {
           width: lineWidth,
           color: selectedColor,
         },
+        hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
         marker: {
           size: markerSize,
           ...(isBarMode && barMarker),

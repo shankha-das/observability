@@ -28,6 +28,14 @@ export const Histogram = ({ visualizations, layout, config }: any) => {
   const legendPosition = dataConfig?.legend?.position || LegendPosition;
   const fillOpacity =
     (dataConfig?.chartStyles?.fillOpacity || FillOpacity) / FILLOPACITY_DIV_FACTOR;
+  const tooltipMode =
+    dataConfig?.tooltipOptions?.tooltipMode !== undefined
+      ? dataConfig.tooltipOptions.tooltipMode
+      : 'show';
+  const tooltipText =
+    dataConfig?.tooltipOptions?.tooltipText !== undefined
+      ? dataConfig.tooltipOptions.tooltipText
+      : 'all';
 
   const valueSeries = defaultAxes?.yaxis || take(fields, lastIndex > 0 ? lastIndex : 1);
 
@@ -55,6 +63,7 @@ export const Histogram = ({ visualizations, layout, config }: any) => {
       x: data[field.name],
       type: 'histogram',
       name: field.name,
+      hoverinfo: tooltipMode === 'hidden' ? 'none' : tooltipText,
       marker: {
         color: selectedColorTheme(field, index, fillOpacity),
         line: {
