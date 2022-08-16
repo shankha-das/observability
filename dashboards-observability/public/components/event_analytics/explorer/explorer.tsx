@@ -356,6 +356,16 @@ export const Explorer = ({
     if (finalQuery.match(PPL_STATS_REGEX)) {
       getVisualizations();
       getAvailableFields(`search source=${curIndex}`);
+      dispatch(
+        changeVisualizationConfig({
+          tabId,
+          vizId: curVisId,
+          data: {
+            ...userVizConfigs[curVisId],
+            dataConfig: {},
+          },
+        })
+      );
     } else {
       findAutoInterval(startTime, endTime);
       if (isLiveTailOnRef.current) {

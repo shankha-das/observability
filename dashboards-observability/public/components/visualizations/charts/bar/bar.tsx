@@ -26,16 +26,15 @@ export const Bar = ({ visualizations, layout, config }: any) => {
     layoutConfig = {},
     availabilityConfig = {},
   } = visualizations?.data?.userConfigs;
-  const dataConfigTab =
-    visualizations.data?.rawVizData?.bar?.dataConfig &&
-    visualizations.data.rawVizData.bar.dataConfig;
-  const xaxis = dataConfigTab?.dimensions
-    ? dataConfigTab.dimensions.filter((item) => item.label)
+  const xaxis = dataConfig?.valueOptions?.dimensions
+    ? dataConfig.valueOptions.dimensions.filter((item) => item.label)
     : [];
-  const yaxis = dataConfigTab?.metrics ? dataConfigTab.metrics.filter((item) => item.label) : [];
+  const yaxis = dataConfig?.valueOptions?.metrics
+    ? dataConfig.valueOptions.metrics.filter((item) => item.label)
+    : [];
   const barOrientation = dataConfig?.chartStyles?.orientation || vis.orientation;
   const isVertical = barOrientation === vis.orientation;
-  const breakdowns = dataConfigTab?.breakdowns ? dataConfigTab.breakdowns : [];
+  const breakdowns = dataConfig?.valueOptions?.breakdowns ? dataConfig.valueOptions.breakdowns : [];
   let bars: Plotly.Data[], valueForYSeries: Plotly.Data[], valueForXSeries: Plotly.Data[];
 
   if (!isEmpty(xaxis) && !isEmpty(yaxis)) {

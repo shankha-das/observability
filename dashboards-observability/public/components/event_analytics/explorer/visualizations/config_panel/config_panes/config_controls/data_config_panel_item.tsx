@@ -18,11 +18,7 @@ import {
   EuiFieldNumber,
   htmlIdGenerator,
 } from '@elastic/eui';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  render as renderExplorerVis,
-  selectExplorerVisualization,
-} from '../../../../../../event_analytics/redux/slices/visualization_slice';
+import { useDispatch } from 'react-redux';
 import { AGGREGATION_OPTIONS } from '../../../../../../../../common/constants/explorer';
 import { ButtonGroupItem } from './config_button_group';
 import { visChartTypes } from '../../../../../../../../common/constants/shared';
@@ -31,9 +27,9 @@ import { TabContext } from '../../../../../hooks';
 
 export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) => {
   const dispatch = useDispatch();
-  const { tabId, setToast } = useContext<any>(TabContext);
-  const explorerVisualizations = useSelector(selectExplorerVisualization)[tabId];
+  const { tabId, setToast, curVisId, changeVisualizationConfig } = useContext<any>(TabContext);
   const { data } = visualizations;
+  const { userConfigs } = data;
 
   const { data: vizData = {}, metadata: { fields = [] } = {} } = data?.rawVizData;
 
@@ -48,37 +44,11 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
 
   const [configList, setConfigList] = useState<ConfigList>({});
 
-  useEffect(() => {
-    if (
-      configList.dimensions &&
-      configList.metrics &&
-      visualizations.data?.rawVizData?.[visualizations.vis.name] === undefined
-    ) {
-      dispatch(
-        renderExplorerVis({
-          tabId,
-          data: {
-            ...explorerVisualizations,
-            [visualizations.vis.name]: {
-              dataConfig: {
-                metrics: configList.metrics,
-                dimensions: configList.dimensions,
-                breakdowns: configList.breakdowns,
-              },
-            },
-          },
-        })
-      );
-    }
-  }, [configList]);
 
   useEffect(() => {
-    if (
-      data.rawVizData?.[visualizations.vis.name] &&
-      data.rawVizData?.[visualizations.vis.name].dataConfig
-    ) {
+    if (userConfigs && userConfigs.dataConfig && userConfigs.dataConfig.valueOptions) {
       setConfigList({
-        ...data.rawVizData[visualizations.vis.name].dataConfig,
+        ...userConfigs.dataConfig.valueOptions,
       });
     } else {
       switch (visualizations.vis.name) {
@@ -189,15 +159,17 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       return;
     }
     dispatch(
-      renderExplorerVis({
+      changeVisualizationConfig({
         tabId,
+        vizId: curVisId,
         data: {
-          ...explorerVisualizations,
-          [visualizations.vis.name]: {
-            dataConfig: {
-              metrics: configList.metrics,
+          ...userConfigs,
+          dataConfig: {
+            ...userConfigs.dataConfig,
+            valueOptions: {
               dimensions: configList.dimensions,
               breakdowns: configList.breakdowns,
+              metrics: configList.metrics,
             },
           },
         },

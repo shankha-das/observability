@@ -50,6 +50,24 @@ const getDefaultXYAxisLabels = (vizFields: IField[], visName: string) => {
   return { xaxis: mapXaxis(), yaxis: mapYaxis() };
 };
 
+const getUserConfigs = (userSelectedConfigs: any, vizFields: IField[], visName: string) => {
+  let configOfUser = userSelectedConfigs;
+  const axesData = getDefaultXYAxisLabels(vizFields, visName);
+  if (!userSelectedConfigs.dataConfig?.valueOptions) {
+    configOfUser = {
+      ...userSelectedConfigs,
+      dataConfig: {
+        ...userSelectedConfigs?.dataConfig,
+        valueOptions: {
+          metrics: axesData.yaxis ?? [],
+          dimensions: axesData.xaxis ?? [],
+        },
+      },
+    };
+  }
+  return configOfUser;
+};
+
 export const getVizContainerProps = ({
   vizId,
   rawVizData = {},
@@ -70,7 +88,9 @@ export const getVizContainerProps = ({
       rawVizData: { ...rawVizData },
       query: { ...query },
       indexFields: { ...indexFields },
-      userConfigs: { ...userConfigs },
+      userConfigs: {
+        ...getUserConfigs(userConfigs, rawVizData?.metadata?.fields, getVisTypeData().name),
+      },
       defaultAxes: {
         ...getDefaultXYAxisLabels(rawVizData?.metadata?.fields, getVisTypeData().name),
       },
