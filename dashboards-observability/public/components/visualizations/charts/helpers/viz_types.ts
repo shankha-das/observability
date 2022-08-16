@@ -27,6 +27,17 @@ interface IVizContainerProps {
   explorer?: ExplorerData;
 }
 
+const initialConfigEntry = {
+  label: '',
+  aggregation: '',
+  custom_label: '',
+  name: '',
+  side: 'right',
+  type: '',
+};
+
+const initialEntryTreemap = { label: '', name: '' };
+
 const getDefaultXYAxisLabels = (vizFields: IField[], visName: string) => {
   if (isEmpty(vizFields)) return {};
   const vizFieldsWithLabel: { [key: string]: string }[] = vizFields.map((vizField) => ({
@@ -54,18 +65,58 @@ const getUserConfigs = (userSelectedConfigs: any, vizFields: IField[], visName: 
   let configOfUser = userSelectedConfigs;
   const axesData = getDefaultXYAxisLabels(vizFields, visName);
   if (!userSelectedConfigs.dataConfig?.valueOptions) {
-    configOfUser = {
-      ...userSelectedConfigs,
-      dataConfig: {
-        ...userSelectedConfigs?.dataConfig,
-        valueOptions: {
-          metrics: axesData.yaxis ?? [],
-          dimensions: axesData.xaxis ?? [],
-        },
-      },
-    };
+    switch (visName) {
+      case visChartTypes.HeatMap:
+        configOfUser = {
+          ...userSelectedConfigs,
+          dataConfig: {
+            ...userSelectedConfigs?.dataConfig,
+            valueOptions: {
+              dimensions: [initialConfigEntry, initialConfigEntry],
+              metrics: [initialConfigEntry],
+            },
+          },
+        };
+        break;
+      case visChartTypes.TreeMap:
+        configOfUser = {
+          ...userSelectedConfigs,
+          dataConfig: {
+            ...userSelectedConfigs?.dataConfig,
+            valueOptions: {
+              dimensions: [{ childField: { ...initialEntryTreemap }, parentFields: [] }],
+              metrics: [{ valueField: { ...initialEntryTreemap } }],
+            },
+          },
+        };
+        break;
+      case visChartTypes.Histogram:
+        configOfUser = {
+          ...userSelectedConfigs,
+          dataConfig: {
+            ...userSelectedConfigs?.dataConfig,
+            valueOptions: {
+              dimensions: [{ bucketSize: '', bucketOffset: '' }],
+              metrics: [],
+            },
+          },
+        };
+        break;
+      default:
+        configOfUser = {
+          ...userSelectedConfigs,
+          dataConfig: {
+            ...userSelectedConfigs?.dataConfig,
+            valueOptions: {
+              metrics: axesData.yaxis ?? [],
+              dimensions: axesData.xaxis ?? [],
+            },
+          },
+        };
+        break;
+    }
   }
-  return configOfUser;
+  return isEmpty(configOfUser) ? userSelectedConfigs : configOfUser;
 };
 
 export const getVizContainerProps = ({

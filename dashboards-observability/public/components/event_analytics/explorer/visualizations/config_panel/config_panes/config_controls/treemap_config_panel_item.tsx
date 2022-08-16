@@ -39,11 +39,7 @@ export const TreemapConfigPanelItem = ({ fieldOptionList, visualizations, tabID 
         ...userConfigs.dataConfig.valueOptions,
       });
     }
-  }, [
-    data.defaultAxes,
-    data.rawVizData?.[visualizations.vis.name]?.dataConfig,
-    visualizations.vis.name,
-  ]);
+  }, [userConfigs?.dataConfig?.valueOptions, visualizations.vis.name]);
 
   const updateList = (configName: string, fieldName: string, value: string | any[]) => {
     let list = { ...configList };

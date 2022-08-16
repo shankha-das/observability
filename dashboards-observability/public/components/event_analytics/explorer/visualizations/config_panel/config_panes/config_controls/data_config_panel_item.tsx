@@ -44,7 +44,6 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
 
   const [configList, setConfigList] = useState<ConfigList>({});
 
-
   useEffect(() => {
     if (userConfigs && userConfigs.dataConfig && userConfigs.dataConfig.valueOptions) {
       setConfigList({
