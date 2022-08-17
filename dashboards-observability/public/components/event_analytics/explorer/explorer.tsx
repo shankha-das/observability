@@ -57,6 +57,7 @@ import {
   PPL_NEWLINE_REGEX,
   LIVE_OPTIONS,
   LIVE_END_TIME,
+  ENABLED_VIS_TYPES,
 } from '../../../../common/constants/shared';
 import { getIndexPatternFromRawQuery, preprocessQuery, buildQuery } from '../../../../common/utils';
 import { useFetchEvents, useFetchVisualizations } from '../hooks';
@@ -141,7 +142,9 @@ export const Explorer = ({
   const [browserTabFocus, setBrowserTabFocus] = useState(true);
   const [liveTimestamp, setLiveTimestamp] = useState(DATE_PICKER_FORMAT);
   const [triggerAvailability, setTriggerAvailability] = useState(false);
-  const [isValidDataConfigOptionSelected, setIsValidDataConfigOptionSelected] = useState<Boolean>(false);
+  const [isValidDataConfigOptionSelected, setIsValidDataConfigOptionSelected] = useState<Boolean>(
+    false
+  );
 
   const queryRef = useRef();
   const appBasedRef = useRef('');
@@ -354,18 +357,21 @@ export const Explorer = ({
 
     // search
     if (finalQuery.match(PPL_STATS_REGEX)) {
+      const cusVisIds = userVizConfigs ? Object.keys(userVizConfigs) : [];
       getVisualizations();
       getAvailableFields(`search source=${curIndex}`);
-      dispatch(
-        changeVisualizationConfig({
-          tabId,
-          vizId: curVisId,
-          data: {
-            ...userVizConfigs[curVisId],
-            dataConfig: {},
-          },
-        })
-      );
+      for (const visId of cusVisIds) {
+        dispatch(
+          changeVisualizationConfig({
+            tabId,
+            vizId: visId,
+            data: {
+              ...userVizConfigs[visId],
+              dataConfig: {},
+            },
+          })
+        );
+      }
     } else {
       findAutoInterval(startTime, endTime);
       if (isLiveTailOnRef.current) {
@@ -740,7 +746,7 @@ export const Explorer = ({
   };
 
   const changeIsValidConfigOptionState = (isValidConfig: Boolean) =>
-  setIsValidDataConfigOptionSelected(isValidConfig);
+    setIsValidDataConfigOptionSelected(isValidConfig);
 
   const getExplorerVis = () => {
     return (
@@ -1150,7 +1156,7 @@ export const Explorer = ({
         explorerFields,
         explorerData,
         http,
-        query
+        query,
       }}
     >
       <div className="dscAppContainer">

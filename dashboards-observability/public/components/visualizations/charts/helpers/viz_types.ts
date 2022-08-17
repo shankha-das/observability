@@ -63,6 +63,7 @@ const getDefaultXYAxisLabels = (vizFields: IField[], visName: string) => {
 
 const getUserConfigs = (userSelectedConfigs: any, vizFields: IField[], visName: string) => {
   let configOfUser = userSelectedConfigs;
+  console.log("Hello", userSelectedConfigs);
   const axesData = getDefaultXYAxisLabels(vizFields, visName);
   if (!userSelectedConfigs.dataConfig?.valueOptions) {
     switch (visName) {
@@ -84,8 +85,15 @@ const getUserConfigs = (userSelectedConfigs: any, vizFields: IField[], visName: 
           dataConfig: {
             ...userSelectedConfigs?.dataConfig,
             valueOptions: {
-              dimensions: [{ childField: { ...initialEntryTreemap }, parentFields: [] }],
-              metrics: [{ valueField: { ...initialEntryTreemap } }],
+              dimensions: [
+                {
+                  childField: { ...(axesData.xaxis ? axesData.xaxis[0] : initialEntryTreemap) },
+                  parentFields: [],
+                },
+              ],
+              metrics: [
+                { valueField: { ...(axesData.yaxis ? axesData.yaxis[0] : initialEntryTreemap) } },
+              ],
             },
           },
         };
@@ -116,6 +124,7 @@ const getUserConfigs = (userSelectedConfigs: any, vizFields: IField[], visName: 
         break;
     }
   }
+  console.log("configOfUser", configOfUser);
   return isEmpty(configOfUser) ? userSelectedConfigs : configOfUser;
 };
 

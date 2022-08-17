@@ -49,42 +49,8 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
       setConfigList({
         ...userConfigs.dataConfig.valueOptions,
       });
-    } else {
-      switch (visualizations.vis.name) {
-        case visChartTypes.HeatMap:
-          setConfigList({
-            dimensions: [initialConfigEntry, initialConfigEntry],
-            metrics: [initialConfigEntry],
-          });
-          break;
-        case visChartTypes.Histogram:
-          setConfigList({
-            dimensions: [{ bucketSize: '', bucketOffset: '' }],
-          });
-          break;
-        default:
-          if (data.defaultAxes.xaxis || data.defaultAxes.yaxis) {
-            const { xaxis, yaxis } = data.defaultAxes;
-            const configListObject = {
-              dimensions: [...(xaxis && xaxis)],
-              metrics: [
-                ...(yaxis &&
-                  yaxis.map((item, i) => ({ ...item, side: i === 0 ? 'left' : 'right' }))),
-              ],
-            };
-            if (visualizations.vis.name !== visChartTypes.Bar) {
-              setConfigList(configListObject);
-            } else {
-              setConfigList({ ...configListObject, breakdowns: [] });
-            }
-          }
-      }
     }
-  }, [
-    data.defaultAxes,
-    data.rawVizData?.[visualizations.vis.name]?.dataConfig,
-    visualizations.vis.name,
-  ]);
+  }, [userConfigs?.dataConfig?.valueOptions, visualizations.vis.name]);
 
   const updateList = (value: string, index: number, name: string, field: string) => {
     let list = { ...configList };
@@ -148,8 +114,12 @@ export const DataConfigPanelItem = ({ fieldOptionList, visualizations }: any) =>
   };
 
   const updateChart = () => {
-    const isAnyMetricEmpty = configList.metrics?.some((field) => field.label.trim() === '');
-    const isAnyDimensionEmpty = configList.dimensions?.some((field) => field.label.trim() === '');
+    const isAnyMetricEmpty =
+      visualizations.vis.name !== visChartTypes.Histogram &&
+      configList.metrics?.some((field) => field.label.trim() === '');
+    const isAnyDimensionEmpty =
+      visualizations.vis.name !== visChartTypes.Histogram &&
+      configList.dimensions?.some((field) => field.label.trim() === '');
     const isAnyBreakdownEmpty =
       visualizations.vis.name === visChartTypes.Bar &&
       configList.breakdowns?.some((field) => field.label.trim() === '');
